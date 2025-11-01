@@ -1,25 +1,34 @@
-import logo from './logo.svg';
+import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
+import { useEffect,useState } from "react";
 import './App.css';
+import Authentication from './Pages/Authentication/Authentication';
+import Loader from "./Components/Loader/Loader";
 
 function App() {
+  const [loading, setLoading] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    setLoading(true);
+    const timer = setTimeout(() => setLoading(false), 2000); // Simulate loading time
+    return () => clearTimeout(timer);
+  }, [location]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    {loading && <Loader/>}
+    {!loading && (
+      <Switch>
+        <Route path="/" component={Authentication} exact/>
+      </Switch>
+    )}
+    </>
   );
 }
 
-export default App;
+const AppWrapper = () => (
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+);
+
+export default AppWrapper;

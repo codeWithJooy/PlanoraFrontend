@@ -1,0 +1,72 @@
+.authMain{
+    width:100%;
+    height:100vh;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.authContainer{
+    width:100%;
+    height:100vh;
+    border-radius: 10px;
+    box-shadow: 0 0 10px lightblue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    
+}
+.authImage{
+    width:60%;
+    height:100vh;
+}
+.authImage img{
+    width:100%;
+    height:100%;
+}
+.authSection{
+    width:40%;
+    height:100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 80px;
+}
+.authCard{
+    width:100%;
+    height:auto;
+    padding:5px;
+}
+.authHeader{
+    width:100%;
+    text-align: center;
+}
+.authHeader p{
+    font-size: 30px;
+    font-weight: bold;
+}
+.authInput{
+    width:100%;
+    padding:0px 40px;
+    display: flex;
+    align-items: center;
+    justify-content:space-around;
+    flex-wrap: wrap;
+    padding:25px 10px;
+}
+.authInput button{
+    width: 100%;
+    padding: 15px 0px;
+    border-radius: 10px;
+}
+.authMultiInput{
+   width:48%;
+}
+.already{
+    text-align: center;
+}
+.already span{
+    cursor: pointer;
+}

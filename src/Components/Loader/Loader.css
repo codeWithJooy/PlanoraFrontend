@@ -1,0 +1,72 @@
+.planora-loader {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    background: radial-gradient(circle at center, #111 20%, #000 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  /* --- Logo Text --- */
+  .planora-logo {
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #fff;
+    position: relative;
+    z-index: 2;
+    animation: fadeIn 1.5s ease forwards, glow 2s ease-in-out infinite alternate;
+  }
+  
+  /* --- Subtext --- */
+  .loader-text {
+    margin-top: 16px;
+    font-size: 16px;
+    color: #aaa;
+    letter-spacing: 0.5px;
+    animation: fadeIn 2s ease-in-out forwards;
+  }
+  
+  /* --- Spotlights --- */
+  .spotlight {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    background: radial-gradient(ellipse at top, rgba(0, 140, 255, 0.25), transparent 70%);
+    filter: blur(30px);
+    transform-origin: top;
+    animation: moveLight 4s ease-in-out infinite alternate;
+  }
+  
+  .spotlight-left {
+    left: -10%;
+    animation-delay: 0s;
+  }
+  
+  .spotlight-right {
+    right: -10%;
+    animation-delay: 2s;
+  }
+  
+  /* --- Animations --- */
+  @keyframes moveLight {
+    0% { transform: rotate(-10deg); }
+    100% { transform: rotate(10deg); }
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes glow {
+    from { text-shadow: 0 0 10px #007bff, 0 0 20px #007bff; }
+    to { text-shadow: 0 0 20px #00cfff, 0 0 40px #00cfff; }
+  }
+  
