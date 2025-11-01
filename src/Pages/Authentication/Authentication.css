@@ -60,6 +60,7 @@
     width: 100%;
     padding: 15px 0px;
     border-radius: 10px;
+    background-color: red;
 }
 .authMultiInput{
    width:48%;
