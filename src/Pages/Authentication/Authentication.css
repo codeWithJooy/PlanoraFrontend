@@ -58,9 +58,18 @@
 }
 .authInput button{
     width: 100%;
+    font-size: 16px;
+    font-weight: bold;
     padding: 15px 0px;
     border-radius: 10px;
-    background-color: red;
+    border: 1px solid var(--color-buttonmain-two);
+    background-color: var(--color-buttonmain-two);
+    color: var(--color-buttonmain-one);
+}
+.authInput button:hover{
+    background-color: transparent;
+    border:1px solid var(--color-buttonmain-one);
+    color: var(--color-buttonmain-one);
 }
 .authMultiInput{
    width:48%;
@@ -70,4 +79,5 @@
 }
 .already span{
     cursor: pointer;
+    color:var(--color-link);
 }

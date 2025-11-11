@@ -42,6 +42,7 @@ const EventMain = () => {
           {activeTab === "Guests" && <Guests />}
         </div>
       </div>
+      
     </div>
   );
 };
@@ -126,7 +127,6 @@ const SubEvents = () => {
   );
 };
 
-
 const Tasks = () => {
   const tasks = [
     {
@@ -191,9 +191,24 @@ const Tasks = () => {
 
 const Vendors = () => {
   const vendors = [
-    { vendor: "Decor Co.", subEvent: "Opening Ceremony", due: "2025-11-20", status: "Completed" },
-    { vendor: "Food & Drinks Inc.", subEvent: "Closing Gala", due: "2025-11-28", status: "Pending" },
-    { vendor: "Tech AV Solutions", subEvent: "Workshop: AI in 2025", due: "2025-11-25", status: "In Progress" },
+    {
+      vendor: "Decor Co.",
+      subEvent: "Opening Ceremony",
+      due: "2025-11-20",
+      status: "Completed",
+    },
+    {
+      vendor: "Food & Drinks Inc.",
+      subEvent: "Closing Gala",
+      due: "2025-11-28",
+      status: "Pending",
+    },
+    {
+      vendor: "Tech AV Solutions",
+      subEvent: "Workshop: AI in 2025",
+      due: "2025-11-25",
+      status: "In Progress",
+    },
   ];
 
   return (
@@ -208,8 +223,7 @@ const Vendors = () => {
           <tr>
             <th>Vendor</th>
             <th>Sub Event</th>
-            <th>Due</th>8
-            <th>Status</th>
+            <th>Due</th>8<th>Status</th>
           </tr>
         </thead>
         <tbody>
@@ -219,7 +233,11 @@ const Vendors = () => {
               <td>{v.subEvent}</td>
               <td>{v.due}</td>
               <td>
-                <span className={`statusTag ${v.status.toLowerCase().replace(" ", "")}`}>
+                <span
+                  className={`statusTag ${v.status
+                    .toLowerCase()
+                    .replace(" ", "")}`}
+                >
                   {v.status}
                 </span>
               </td>

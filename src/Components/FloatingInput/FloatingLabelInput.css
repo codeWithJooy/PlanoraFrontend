@@ -7,24 +7,24 @@
   .floating-input {
     width: 100%;
     border: none;
-    border-bottom: 2px solid #ccc;
+    border-bottom: 1px solid var(--color-floating-initial);
     background: transparent;
     padding: 12px 0 8px 0;
     font-size: 16px;
-    color: #222;
+    color: var(--color-floating-initial);
     outline: none;
     transition: border-color 0.3s ease;
   }
   
   .floating-input:focus {
-    border-bottom-color: #007bff; /* blue color on focus */
+    border-bottom-color: var(--color-floating-initial); /* blue color on focus */
   }
   
   .floating-label {
     position: absolute;
     left: 0;
     top: 12px;
-    color: #777;
+    color: var(--color-floating-initial);
     font-size: 16px;
     pointer-events: none;
     transition: all 0.2s ease;
@@ -33,48 +33,8 @@
   .floating-label.active {
     top: -6px;
     font-size: 12px;
-    color: #007bff;
+    color: var(--color-floating-final);
   }
-  /* Common styles (already present) */
-.floating-input-container {
-  position: relative;
-  width: 100%;
-  margin-top: 1.5rem;
-}
-
-.floating-input {
-  width: 100%;
-  border: none;
-  border-bottom: 2px solid #ccc;
-  background: transparent;
-  padding: 12px 0 8px 0;
-  font-size: 16px;
-  color: #222;
-  outline: none;
-  transition: border-color 0.3s ease;
-  resize: none;
-}
-
-.floating-input:focus {
-  border-bottom-color: #007bff;
-}
-
-/* Label */
-.floating-label {
-  position: absolute;
-  left: 0;
-  top: 12px;
-  color: #777;
-  font-size: 16px;
-  pointer-events: none;
-  transition: all 0.2s ease;
-}
-
-.floating-label.active {
-  top: -6px;
-  font-size: 12px;
-  color: #007bff;
-}
 
 /* Select styling */
 select.floating-input {
