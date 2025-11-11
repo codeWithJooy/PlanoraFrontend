@@ -35,4 +35,104 @@
     font-size: 12px;
     color: #007bff;
   }
+  /* Common styles (already present) */
+.floating-input-container {
+  position: relative;
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.floating-input {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  background: transparent;
+  padding: 12px 0 8px 0;
+  font-size: 16px;
+  color: #222;
+  outline: none;
+  transition: border-color 0.3s ease;
+  resize: none;
+}
+
+.floating-input:focus {
+  border-bottom-color: #007bff;
+}
+
+/* Label */
+.floating-label {
+  position: absolute;
+  left: 0;
+  top: 12px;
+  color: #777;
+  font-size: 16px;
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+.floating-label.active {
+  top: -6px;
+  font-size: 12px;
+  color: #007bff;
+}
+
+/* Select styling */
+select.floating-input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 24px;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%23777' height='20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 9l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 0px center;
+  background-size: 16px;
+}
+
+/* Date input specific styles */
+.date-input {
+  color-scheme: light; /* ensures consistent calendar icon color across browsers */
+  cursor: pointer;
+}
+
+/* Make sure label floats even when a date is selected */
+.date-input:not(:placeholder-shown) + .floating-label {
+  top: -6px;
+  font-size: 12px;
+  color: #007bff;
+}
+
+/* Optional: Hide the default calendar icon and add custom one (if you want) */
+.date-input::-webkit-calendar-picker-indicator {
+  color: transparent;
+  background: url("data:image/svg+xml;utf8,<svg fill='%23777' height='20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M6 8h12v2H6V8zm0 4h12v2H6v-2z'/></svg>") no-repeat center;
+  background-size: 16px;
+  opacity: 0.7;
+  cursor: pointer;
+}
+/* =======================
+   Floating Select Styles
+   ======================= */
+   select.floating-input {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 28px;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%23777' height='20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 9l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 4px center;
+    background-size: 16px;
+    cursor: pointer;
+  }
+  
+  select.floating-input:focus {
+    border-bottom-color: #007bff;
+  }
+  
+  /* Ensure label floats when a value is selected */
+  select.floating-input:not([value=""]) + .floating-label,
+  select.floating-input:focus + .floating-label {
+    top: -6px;
+    font-size: 12px;
+    color: #007bff;
+  }
   

@@ -1,0 +1,55 @@
+.eventTabsSection{
+    width:100%;
+    padding:10px;
+    padding-left:0px;
+    position: relative;
+    display: flex;
+    height:100px;
+}
+.eventTabButtons{
+    width:100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.eventTabButton{
+    margin-right: 20px;
+    cursor: pointer;
+    padding:5px
+}
+.eventTabButton p{
+    font-size: 18px;
+}
+.tabSelected{
+    border-bottom: 1px solid lightcoral;
+}
+.tabSelected p{
+    font-weight: bold;
+    font-size: 20px;
+}
+.eventCreateSection{
+    width:200px;
+}
+.eventCreateSection button{
+    width:100%;
+    padding:18px 30px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.eventCardSection{
+    width:100%;
+    height:calc(100% - 100px);
+    padding-right: 100px;
+}
+.eventEmptySection{
+    width:100%;
+    height:calc(100% - 100px);
+    padding-right: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.eventEmptySection p{
+    font-size: 40px;
+    font-weight: bold;
+}

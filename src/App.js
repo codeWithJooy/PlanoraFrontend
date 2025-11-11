@@ -1,8 +1,12 @@
 import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
-import { useEffect,useState } from "react";
-import './App.css';
-import Authentication from './Pages/Authentication/Authentication';
+import { useEffect, useState } from "react";
+import "./App.css";
+import Authentication from "./Pages/Authentication/Authentication";
 import Loader from "./Components/Loader/Loader";
+import Onboarding from "./Pages/Onboarding/Onboarding";
+import Dashboard from "./Pages/Dashboard/Dashboard";
+import Events from "./Pages/Events/Events";
+import EventMain from "./Pages/Events/EventMain";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -15,12 +19,16 @@ function App() {
   }, [location]);
   return (
     <>
-    {loading && <Loader/>}
-    {!loading && (
-      <Switch>
-        <Route path="/" component={Authentication} exact/>
-      </Switch>
-    )}
+      {loading && <Loader />}
+      {!loading && (
+        <Switch>
+          <Route path="/" component={Authentication} exact />
+          <Route path="/onboard" component={Onboarding} />
+          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/events" component={Events}/>
+          <Route path="/eventMain" component={EventMain}/>
+        </Switch>
+      )}
     </>
   );
 }

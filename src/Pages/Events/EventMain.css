@@ -1,0 +1,228 @@
+.eventOverview{
+    width:100%;
+    padding: 10px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height:150px;
+ 
+}
+.eventmaintitlesection{
+    width:80%;
+}
+.eventmainbutton{
+    width:20%;
+}
+.eventmainTitle{
+    width:100%;
+    padding:0px 20px 20px 0px;
+}
+.eventmainTitle p{
+    font-size: 40px;
+    font-weight: bold;
+}
+.eventmainsub{
+    width:100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    border-bottom: 1px solid lightgray;
+}
+.eventsub{
+    width:12%;
+    
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    cursor: pointer;
+}
+.eventsubselected{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border-bottom: 2px solid black;
+}
+
+.eventsub p{
+    font-size: 20px;
+    padding:10px 0px 10px 0px;
+
+    color: lightgray;
+}
+.eventsubselected p{
+    font-size: 25px;
+    color: black;
+}
+
+/*===================================================*/
+.eventmainsubSection{
+    width:100%;
+    height:calc(100% - 150px);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding:10px 20px 10px;
+}
+.overcardEventName{
+    font-size: 20px;
+    font-weight: bold;
+}
+.overcardEventType{
+    font-size: 15px;
+    margin:5px 0px;
+}
+.eventoverviewstatus{
+    padding:10px 20px;
+    border:1px solid lightcoral;
+    border-radius: 10px;
+}
+/*===================================================*/
+
+/*===================================================*/
+/* ========== Sub Events Section ========== */
+.subeventHeader {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 0px 10px;
+  }
+  
+  .subeventHeader h2 {
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .addSubEventBtn {
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .addSubEventBtn:hover {
+    background-color: #444;
+  }
+  
+  /* Table Styling */
+  .subeventTable {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  
+  .subeventTable th,
+  .subeventTable td {
+    text-align: left;
+    padding: 14px 18px;
+    border-bottom: 1px solid #eee;
+    font-size: 16px;
+  }
+  
+  .subeventTable th {
+    background-color: #f8f8f8;
+    font-weight: 600;
+  }
+  
+  .subeventTable tr:hover {
+    background-color: #fafafa;
+  }
+  
+  /* Status Tags */
+  .statusTag {
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: capitalize;
+  }
+  
+  .statusTag.planned {
+    background-color: #e0f7fa;
+    color: #00796b;
+  }
+  
+  .statusTag.ongoing {
+    background-color: #fff3e0;
+    color: #ef6c00;
+  }
+  
+  .statusTag.pending {
+    background-color: #fce4ec;
+    color: #ad1457;
+  }
+  
+
+/*===================================================*/
+/* ========== Tasks Section (reuses same table style) ========== */
+.subeventHeader h2 {
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .addSubEventBtn {
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .addSubEventBtn:hover {
+    background-color: #444;
+  }
+  
+  /* Table reused */
+  .subeventTable {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  
+  .subeventTable th,
+  .subeventTable td {
+    text-align: left;
+    padding: 14px 18px;
+    border-bottom: 1px solid #eee;
+    font-size: 16px;
+  }
+  
+  .subeventTable th {
+    background-color: #f8f8f8;
+    font-weight: 600;
+  }
+  
+  .subeventTable tr:hover {
+    background-color: #fafafa;
+  }
+  
+  /* Status Tags for Tasks */
+  .statusTag.completed {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+  }
+  
+  .statusTag.progress,
+  .statusTag.inprogress {
+    background-color: #fff3e0;
+    color: #ef6c00;
+  }
+  
+  .statusTag.pending {
+    background-color: #fce4ec;
+    color: #ad1457;
+  }
