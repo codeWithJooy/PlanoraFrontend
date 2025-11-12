@@ -107,4 +107,13 @@
     border-radius:10px;
     border:none;
     cursor: pointer;
+    font-size: 16px;
+}
+.onboardLeftButton{
+  background-color: var(--color-buttonmain-two);
+  color: var(--color-buttonmain-one);
+}
+.onboardRightButton{
+  background-color: var(--color-buttonmain-one);
+  color: var(--color-buttonmain-two);
 }

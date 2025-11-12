@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import {useHistory} from 'react-router-dom'
 import "./Onboarding.css";
 import FloatingLabelInput from "../../Components/FloatingInput/FloatingLabelInput";
 import FloatingLabelTextarea from "../../Components/FloatingInput/FLoatingLabelTextArea";
 
 const Onboarding = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
+  const history=useHistory();
   const totalSteps = 3;
 
   const nextStep = () => {
@@ -27,6 +29,18 @@ const Onboarding = () => {
       description: "Final step! You’ve completed all steps.",
     },
   ];
+  const handleNextCard = () => {
+    setStep(step + 1);
+  };
+  const handleBackCard = () => {
+    setStep(step - 1);
+  };
+  const handleCancel=()=>{
+     history.push("/")
+  }
+  const handleOnboard=()=>{
+    history.push("/dashboard")
+ }
 
   return (
     <div className="onboardMain">
@@ -48,39 +62,80 @@ const Onboarding = () => {
           ))}
         </div>
       </div>
-      <div className="onboardMainSection">
-        <div className="onboardCard">
-          <div className="onboardLeft">
-            <img src="assets/authentication/authentication.jpg" />
-          </div>
-          <div className="onboardRight">
-            <div className="onBoardTitle">
-              <p>Organisation Details</p>
+      {step === 0 && (
+        <div className="onboardMainSection">
+          <div className="onboardCard">
+            <div className="onboardLeft">
+              <img src="assets/authentication/authentication.jpg" />
             </div>
-            <div className="authInput">
-              <FloatingLabelInput label="Organisation Name" />
-            </div>
-            <div className="authInput">
-              <div className="authMultiInput">
-                <FloatingLabelInput label="Organisations Phone" />
+            <div className="onboardRight">
+              <div className="onBoardTitle">
+                <p>Organisation Details</p>
               </div>
-              <div className="authMultiInput">
-                <FloatingLabelInput label="Organisations Email" />
+              <div className="authInput">
+                <FloatingLabelTextarea label="Official Address" />
               </div>
-            </div>
-            <div className="authInput">
-              <FloatingLabelTextarea label="Official Address" />
-            </div>
-            <div className="authInput">
-              <FloatingLabelTextarea label="Description" />
-            </div>
-            <div className="onboardingButtonSection">
-                <button>Cancel</button>
-                <button>Next</button>
+              <div className="authInput">
+                <FloatingLabelTextarea label="Description" />
+              </div>
+              <div className="onboardingButtonSection">
+                <button className="onboardLeftButton" onClick={handleCancel}>Cancel</button>
+                <button className="onboardRightButton" onClick={handleNextCard}>
+                  Next
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
+      {step === 1 && (
+        <div className="onboardMainSection">
+          <div className="onboardCard">
+            <div className="onboardLeft">
+              <img src="assets/authentication/authentication.jpg" />
+            </div>
+            <div className="onboardRight">
+              <div className="onBoardTitle">
+                <p>Organisation Details</p>
+              </div>
+              <div className="authInput">
+                <FloatingLabelInput label="Instagram Handle" />
+              </div>
+              <div className="authInput">
+                <FloatingLabelInput label="Website" />
+              </div>
+              <div className="onboardingButtonSection">
+                <button className="onboardLeftButton" onClick={handleBackCard}>Back</button>
+                <button className="onboardRightButton" onClick={handleNextCard}>Next</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {step === 2 && (
+        <div className="onboardMainSection">
+          <div className="onboardCard">
+            <div className="onboardLeft">
+              <img src="assets/authentication/authentication.jpg" />
+            </div>
+            <div className="onboardRight">
+              <div className="onBoardTitle">
+                <p>Organisation Details</p>
+              </div>
+              <div className="authInput">
+                <FloatingLabelInput label="How Many team members you work with ?" />
+              </div>
+              <div className="authInput">
+                <FloatingLabelInput label="Do You manage External Vendors ?" />
+              </div>
+              <div className="onboardingButtonSection">
+                <button className="onboardLeftButton" onClick={handleBackCard}>Back</button>
+                <button className="onboardRightButton" onClick={handleOnboard}>Onboard</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./Authentication.css";
+import { useHistory } from "react-router-dom";
 import FloatingLabelInput from "../../Components/FloatingInput/FloatingLabelInput";
 
 const Authentication = () => {
   const [toggle,setToggle]=useState('signup')
+  const history=useHistory()
   return (
     <div className="authMain">
       <div className="authContainer">
@@ -13,7 +15,7 @@ const Authentication = () => {
         <div className="authSection">
         {
           toggle==='signup' &&
-          <Signup setToggle={setToggle}/>
+          <Signup setToggle={setToggle} history={history}/>
         }
         {
           toggle==='login' &&
@@ -27,7 +29,7 @@ const Authentication = () => {
 
 export default Authentication;
 
-const Signup=({setToggle})=>{
+const Signup=({setToggle,history})=>{
   return(
     <div className="authCard">
     <div className="authHeader">
@@ -51,7 +53,7 @@ const Signup=({setToggle})=>{
       <FloatingLabelInput label="Confirm Password" />
     </div>
     <div className="authInput">
-      <button>Sign Up</button>
+      <button onClick={()=>history.push("/onboard")}>Sign Up</button>
     </div>
     <div className="already">
       <p>Already have an account ? <span className="link" onClick={()=>setToggle('login')}>Log In</span></p>
