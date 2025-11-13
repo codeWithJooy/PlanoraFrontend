@@ -7,7 +7,7 @@ const Dashboard=()=>{
     return(
       <div className="main">
         <div className="mainContainer">
-         <Sidebar/>
+         <Sidebar page="Dashboard"/>
         </div>
       </div>
     )

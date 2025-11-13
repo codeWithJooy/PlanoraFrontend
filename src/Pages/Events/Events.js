@@ -7,6 +7,7 @@ import FloatingLabelInput from "../../Components/FloatingInput/FloatingLabelInpu
 import FloatingDateInput from "../../Components/FloatingInput/FloatingDateInput";
 import FloatingSelectInput from "../../Components/FloatingInput/FloatingSelectInput";
 import FloatLabelTextArea from "../../Components/FloatingInput/FLoatingLabelTextArea";
+import Header from "../../Components/Header/Header";
 
 const Events = () => {
   const [modal, setModal] = useState(false);
@@ -30,18 +31,9 @@ const Events = () => {
   return (
     <div className="main">
       <div className="mainContainer">
-        <Sidebar />
+        <Sidebar page="Events"/>
         <div className="mainPage">
-          <div className="mainHeader">
-            <div className="pagePath">
-              <p>Events</p>
-            </div>
-            <div className="pageUser">
-              <img src="assets/Header/user.jpg" className="userIcon" />
-              <p>Abhi Hazra</p>
-              <img src="assets/Header/dropdown.png" className="userDropdown" />
-            </div>
-          </div>
+          <Header/>
 
           <div className="mainContent">
             <div className="eventTabsSection">
