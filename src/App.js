@@ -7,6 +7,7 @@ import Onboarding from "./Pages/Onboarding/Onboarding";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import Events from "./Pages/Events/Events";
 import EventMain from "./Pages/Events/EventMain";
+import Tasks from "./Pages/Tasks/Tasks";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -14,7 +15,7 @@ function App() {
 
   useEffect(() => {
     setLoading(true);
-    const timer = setTimeout(() => setLoading(false), 2000); // Simulate loading time
+    const timer = setTimeout(() => setLoading(false), 100); // Simulate loading time
     return () => clearTimeout(timer);
   }, [location]);
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/events" component={Events}/>
           <Route path="/eventMain" component={EventMain}/>
+          <Route path="/tasks" component={Tasks}/>
         </Switch>
       )}
     </>

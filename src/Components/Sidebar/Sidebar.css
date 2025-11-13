@@ -40,9 +40,10 @@
 }
 .sidebarUnit p{
     font-size: 20px;
+    color: #1f7a8c;
 }
 .sideunitActive{
     border: none;
     border-radius: 10px;
-    background-color: lightcyan;
+    background-color: #bfdbf7;
 }
