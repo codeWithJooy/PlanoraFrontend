@@ -1,5 +1,5 @@
 import React from "react";
-import "./EventTable.css";
+import "./table.css";
 
 const EventTable = ({ events }) => {
   return (

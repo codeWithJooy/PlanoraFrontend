@@ -11,8 +11,8 @@ const Sidebar = ({ page = "Dashboard" }) => {
     { name: "Dashboard", icon: "dashboard.png" ,pagelink:"dashboard"},
     { name: "Events", icon: "dashboard.png" ,pagelink:"events"},
     { name: "Tasks", icon: "dashboard.png" , pagelink:"tasks"},
-    { name: "Vendors", icon: "dashboard.png" , pagelink:"dashboard"},
-    { name: "Team", icon: "dashboard.png" , pagelink:"dashboard"},
+    { name: "Vendors", icon: "dashboard.png" , pagelink:"vendors"},
+    { name: "Teams", icon: "dashboard.png" , pagelink:"teams"},
     { name: "Settings", icon: "dashboard.png" , pagelink:"dashboard"},
   ];
 

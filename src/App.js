@@ -8,6 +8,8 @@ import Dashboard from "./Pages/Dashboard/Dashboard";
 import Events from "./Pages/Events/Events";
 import EventMain from "./Pages/Events/EventMain";
 import Tasks from "./Pages/Tasks/Tasks";
+import Vendors from "./Pages/Vendors/Vendors";
+import Teams from "./Pages/Team/Teams";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -29,6 +31,8 @@ function App() {
           <Route path="/events" component={Events}/>
           <Route path="/eventMain" component={EventMain}/>
           <Route path="/tasks" component={Tasks}/>
+          <Route path="/vendors" component={Vendors} />
+          <Route path="/teams" component={Teams}/>
         </Switch>
       )}
     </>

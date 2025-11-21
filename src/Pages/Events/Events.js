@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 import "./Events.css";
 import EventCard from "../../Components/EventCard/EventCard";
-import EventTable from "../../Components/EventTable/EventTable";
 import FloatingLabelInput from "../../Components/FloatingInput/FloatingLabelInput";
 import FloatingDateInput from "../../Components/FloatingInput/FloatingDateInput";
 import FloatingSelectInput from "../../Components/FloatingInput/FloatingSelectInput";
 import FloatLabelTextArea from "../../Components/FloatingInput/FLoatingLabelTextArea";
 import Header from "../../Components/Header/Header";
+import EventTable from "../../Components/Tables/EventTable";
 
 const Events = () => {
   const [modal, setModal] = useState(false);

@@ -67,6 +67,8 @@
     padding:10px;
     padding-left:20px;
 }
+
+/*Modal Section Starts Here*/
 .pageModal{
     position: fixed;
     top:0;
@@ -116,5 +118,45 @@
 }
 .modalButtonSection{
     width:100%;
-    
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+}
+.modalButtonSection button{
+    padding:12px 40px;
+    border-radius: 15px;
+    margin:1px 15px;
+}
+.field{
+    width:100%;
+    margin:10px 0px;
+}
+.field p{
+    font-size: 20px;
+    font-weight: bold;
+}
+.fieldSection{
+    width:100%;
+    margin:10px;
+}
+.fieldUnit{
+    width:100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+.fieldType{
+    width:40%
+}
+.fieldLabel{
+    width:55%;
+    margin-left:5%;
+}
+.fieldAdd{
+    width:100%;
+    margin:15px 0px;
+}
+.fieldAdd button{
+    padding:10px 20px;
 }
