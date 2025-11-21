@@ -1,37 +1,35 @@
 import React from "react";
 import "./table.css";
 
-const VendorsTable = ({ vendors }) => {
+const TeamsTable = ({ teams }) => {
   return (
     <div className="table-container">
       <table className="events-table">
         <thead>
           <tr>
-            <th>Vendor Name</th>
+            <th>Name</th>
             <th>Phone</th>
             <th>Alternative Number</th>
             <th>Email</th>
-            <th>Category</th>
             <th>Task Due</th>
           </tr>
         </thead>
 
         <tbody>
-          {vendors.length === 0 ? (
+          {teams.length === 0 ? (
             <tr>
               <td colSpan="5" className="no-data">
-                No Vendor found
+                No Member found
               </td>
             </tr>
           ) : (
-            vendors.map((vendor) => (
-              <tr key={vendor.id}>
-                <td>{vendor.vendorName}</td>
-                <td>{vendor.vendorPhone}</td>
-                <td>{vendor.vendorAlternative}</td>
-                <td>{vendor.vendorEmail}</td>
-                <td>{vendor.vendorCategory}</td>
-                <td>{vendor.vendorTasksDue}</td>
+            teams.map((team) => (
+              <tr key={team.id}>
+                <td>{team.teamName}</td>
+                <td>{team.teamPhone}</td>
+                <td>{team.teamAlternative}</td>
+                <td>{team.teamEmail}</td>
+                <td>{team.teamTasksDue}</td>
               </tr>
             ))
           )}
@@ -41,4 +39,4 @@ const VendorsTable = ({ vendors }) => {
   );
 };
 
-export default VendorsTable;
+export default TeamsTable;
