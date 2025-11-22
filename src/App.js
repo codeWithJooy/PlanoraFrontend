@@ -11,6 +11,9 @@ import Tasks from "./Pages/Tasks/Tasks";
 import Vendors from "./Pages/Vendors/Vendors";
 import Teams from "./Pages/Team/Teams";
 
+import { Provider } from "react-redux";
+import store from "./redux/store";
+
 function App() {
   const [loading, setLoading] = useState(false);
   const location = useLocation();
@@ -28,11 +31,11 @@ function App() {
           <Route path="/" component={Authentication} exact />
           <Route path="/onboard" component={Onboarding} />
           <Route path="/dashboard" component={Dashboard} />
-          <Route path="/events" component={Events}/>
-          <Route path="/eventMain" component={EventMain}/>
-          <Route path="/tasks" component={Tasks}/>
+          <Route path="/events" component={Events} />
+          <Route path="/eventMain" component={EventMain} />
+          <Route path="/tasks" component={Tasks} />
           <Route path="/vendors" component={Vendors} />
-          <Route path="/teams" component={Teams}/>
+          <Route path="/teams" component={Teams} />
         </Switch>
       )}
     </>
@@ -40,9 +43,11 @@ function App() {
 }
 
 const AppWrapper = () => (
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>
 );
 
 export default AppWrapper;
