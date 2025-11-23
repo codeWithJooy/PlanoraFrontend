@@ -13,6 +13,7 @@ import Teams from "./Pages/Team/Teams";
 
 import { Provider } from "react-redux";
 import store from "./redux/store";
+import Toast from "./Components/Toast/Toast";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -37,6 +38,7 @@ function App() {
           <Route path="/vendors" component={Vendors} />
           <Route path="/teams" component={Teams} />
         </Switch>
+        
       )}
     </>
   );
@@ -46,6 +48,7 @@ const AppWrapper = () => (
   <Provider store={store}>
     <BrowserRouter>
       <App />
+      <Toast/>
     </BrowserRouter>
   </Provider>
 );
