@@ -25,35 +25,50 @@ const getApiUrls = () => {
 
 export const APIS = getApiUrls();
 
-// Create Axios instances by group
+// Create Axios instances
 export const authApi = axios.create({ baseURL: APIS.AUTH });
 export const userApi = axios.create({ baseURL: APIS.USER });
 export const customerApi = axios.create({ baseURL: APIS.CUSTOMER });
 export const orderApi = axios.create({ baseURL: APIS.ORDER });
 
 /**
- * Add Token Handling & Refresh Support
+ * Attach Interceptors
  */
 const attachInterceptors = (instance) => {
-  instance.interceptors.request.use((config) => {
-    const token = store.getState().user.accessToken;
-    if (token) config.headers.Authorization = `Bearer ${token}`;
-    return config;
-  });
+  // REQUEST INTERCEPTOR
+  instance.interceptors.request.use(
+    (config) => {
+      const state = store.getState();
+      const token = state?.user?.accessToken;  // SAFE ACCESS
+
+      console.log("Interceptor request running. Token:", token);
+
+      if (token) config.headers.Authorization = `Bearer ${token}`;
+      return config;
+    },
+    (error) => {
+      console.error("Request Interceptor Error:", error);
+      return Promise.reject(error);
+    }
+  );
 
   let isRefreshing = false;
   let pendingRequestsQueue = [];
 
+  // RESPONSE INTERCEPTOR
   instance.interceptors.response.use(
     (res) => res,
     async (err) => {
+      console.log("Interceptor response error:", err?.response?.status);
+
       const originalRequest = err.config;
 
-      if (err.response?.status === 401 && !originalRequest._retry) {
+      if (err?.response?.status === 401 && !originalRequest?._retry) {
         originalRequest._retry = true;
 
         if (!isRefreshing) {
           isRefreshing = true;
+
           try {
             const newAccessToken = await store.dispatch(refreshAccessToken());
 
@@ -65,6 +80,7 @@ const attachInterceptors = (instance) => {
             originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
             return instance(originalRequest);
           } catch (refreshError) {
+            console.error("Token refresh failed:", refreshError);
             isRefreshing = false;
             pendingRequestsQueue = [];
             store.dispatch(logout());

@@ -74,8 +74,9 @@ const Login = ({ setToggle }) => {
     setPassword(e.target.value);
   };
   const handleLogin = async () => {
+    console.log("Login clicked");
      await orgLogin({email,password});
-     window.location.href = "/dashboard";
+     //window.location.href = "/dashboard";
   };
   return (
     <div className="authCard">
