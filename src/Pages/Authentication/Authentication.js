@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Authentication.css";
 import { useHistory } from "react-router-dom";
 import FloatingLabelInput from "../../Components/FloatingInput/FloatingLabelInput";
-import { orgLogin } from "../../redux/actions/authAction";
+import { orgLogin, orgSignup } from "../../redux/actions/authAction";
 
 const Authentication = () => {
   const [toggle, setToggle] = useState("signup");
@@ -27,30 +27,48 @@ const Authentication = () => {
 export default Authentication;
 
 const Signup = ({ setToggle, history }) => {
+  const [orgDetails,setOrgDetails]=useState({
+    orgName:"",
+    orgPhone:"",
+    orgPassword:"",
+    orgEmail:"",
+    type:"startup"
+  })
+  const handleOnChange = (e) => {
+    setOrgDetails({
+      ...orgDetails,
+      [e.target.name]: e.target.value
+    });
+  };
+  
+  const handleSignup=async()=>{
+    console.log(orgDetails)
+    await orgSignup(orgDetails)
+  }
   return (
     <div className="authCard">
       <div className="authHeader">
         <p>Welcome To Planora </p>
       </div>
       <div className="authInput">
-        <FloatingLabelInput label="Organisations Name" />
+        <FloatingLabelInput label="Organisations Name" name="orgName" value={orgDetails.orgName} onChange={handleOnChange}/>
       </div>
       <div className="authInput">
         <div className="authMultiInput">
-          <FloatingLabelInput label="Organisations Phone" />
+          <FloatingLabelInput label="Organisations Phone" name="orgPhone" value={orgDetails.orgPhone} onChange={handleOnChange}/>
         </div>
         <div className="authMultiInput">
-          <FloatingLabelInput label="Organisations Email" />
+          <FloatingLabelInput label="Organisations Email" name="orgEmail" value={orgDetails.orgEmail} onChange={handleOnChange}/>
         </div>
       </div>
       <div className="authInput">
-        <FloatingLabelInput label="Enter Password" />
+        <FloatingLabelInput label="Enter Password" name="orgPassword" value={orgDetails.orgPassword} onChange={handleOnChange}/>
       </div>
       <div className="authInput">
         <FloatingLabelInput label="Confirm Password" />
       </div>
       <div className="authInput">
-        <button onClick={() => history.push("/onboard")}>Sign Up</button>
+        <button onClick={handleSignup}>Sign Up</button>
       </div>
       <div className="already">
         <p>

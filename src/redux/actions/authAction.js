@@ -1,11 +1,32 @@
 import { ORG_LOGIN } from "../actionTypes/orgActionTypes";
 import { authApi } from "../../api";
 import { dispatchAction, getHeaders } from "./actionHelper";
-
+import { CodeAnalogy } from "../../Components/Toast/Toast";
+import { updateToast } from "./toastAction";
+export const orgSignup=async(data)=>{
+  try{
+    const headers=getHeaders();
+    const org={
+      orgName:data.orgName,
+      orgPhone:data.orgPhone,
+      orgEmail:data.orgEmail,
+      orgPassword:data.orgPassword,
+      type:data.type
+    }
+    const response=await authApi.post("/register",org,headers)
+    if(response.data.code===200){
+       updateToast({
+        code: CodeAnalogy.SUCCESS,
+        title: "Signup Successful",
+        message: "Welcome To Planora",
+       })
+       return true;
+    }
+  }catch(error){
+    console.log(error.message)
+  }
+}
 export const orgLogin = async (data) => {
-  console.log(data);
-  console.log("Trying to call:", authApi.defaults.baseURL + "/login");
-
   try {
     const headers=getHeaders();
     const org = {
