@@ -1,15 +1,30 @@
 import React, { useState, useEffect } from "react";
 import {useHistory} from 'react-router-dom'
+import { useSelector, useDispatch } from "react-redux";
 import "./Onboarding.css";
 import FloatingLabelInput from "../../Components/FloatingInput/FloatingLabelInput";
 import FloatingLabelTextarea from "../../Components/FloatingInput/FLoatingLabelTextArea";
+import { orgDetails } from "../../redux/actions/authAction";
 
 const Onboarding = () => {
+  const { org } = useSelector((state) => state.org);
   const [step, setStep] = useState(0);
   const history=useHistory();
   const [onboard,setOnboard]=useState({
-    
+    orgId:org.orgId,
+    officialAddress:"",
+    description:"",
+    insta:"",
+    website:"",
+    teamStrength:"",
+    externalVendor:""
   })
+  const handleChange=(e)=>{
+     setOnboard({
+      ...onboard,
+      [e.target.name]:e.target.value
+     })
+  }
 
   const totalSteps = 3;
 
@@ -36,6 +51,7 @@ const Onboarding = () => {
 
   const handleNextCard = () => {
     setStep(step + 1);
+    console.log(onboard)
   };
   const handleBackCard = () => {
     setStep(step - 1);
@@ -43,8 +59,12 @@ const Onboarding = () => {
   const handleCancel=()=>{
      history.push("/")
   }
-  const handleOnboard=()=>{
-    history.push("/dashboard")
+  const handleOnboard=async()=>{
+    console.log(onboard)
+    const data=await orgDetails(onboard)
+    if(data){
+      history.push("/dashboard")
+    }
  }
 
   return (
@@ -75,13 +95,13 @@ const Onboarding = () => {
             </div>
             <div className="onboardRight">
               <div className="onBoardTitle">
-                <p>Organisation Details</p>
+                <p>Organisation Details</p> 
               </div>
               <div className="authInput">
-                <FloatingLabelTextarea label="Official Address" />
+                <FloatingLabelTextarea label="Official Address" name="officialAddress" onChange={handleChange}/>
               </div>
               <div className="authInput">
-                <FloatingLabelTextarea label="Description" />
+                <FloatingLabelTextarea label="Description" name="description" onChange={handleChange}/>
               </div>
               <div className="onboardingButtonSection">
                 <button className="onboardLeftButton" onClick={handleCancel}>Cancel</button>
@@ -104,10 +124,10 @@ const Onboarding = () => {
                 <p>Organisation Details</p>
               </div>
               <div className="authInput">
-                <FloatingLabelInput label="Instagram Handle" />
+                <FloatingLabelInput label="Instagram Handle" name="insta" onChange={handleChange}/>
               </div>
               <div className="authInput">
-                <FloatingLabelInput label="Website" />
+                <FloatingLabelInput label="Website" name="website" onChange={handleChange}/>
               </div>
               <div className="onboardingButtonSection">
                 <button className="onboardLeftButton" onClick={handleBackCard}>Back</button>
@@ -128,10 +148,10 @@ const Onboarding = () => {
                 <p>Organisation Details</p>
               </div>
               <div className="authInput">
-                <FloatingLabelInput label="How Many team members you work with ?" />
+                <FloatingLabelInput label="How Many team members you work with ?" name="teamStrength" onChange={handleChange}/>
               </div>
               <div className="authInput">
-                <FloatingLabelInput label="Do You manage External Vendors ?" />
+                <FloatingLabelInput label="Do You manage External Vendors ?" name="externalVendor" onChange={handleChange}/>
               </div>
               <div className="onboardingButtonSection">
                 <button className="onboardLeftButton" onClick={handleBackCard}>Back</button>

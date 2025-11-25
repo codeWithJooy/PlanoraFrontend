@@ -1,0 +1,1 @@
+export const ORG_DETAILS_ADDED="ORG_DETAILS_ADDED"

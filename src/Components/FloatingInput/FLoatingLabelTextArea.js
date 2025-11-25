@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./FloatingLabelInput.css"; // same CSS file
 
-const FloatingLabelTextarea = ({ label, value, onChange, rows = 3 }) => {
+const FloatingLabelTextarea = ({ label, value, name,onChange, rows = 3 }) => {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
@@ -9,6 +9,7 @@ const FloatingLabelTextarea = ({ label, value, onChange, rows = 3 }) => {
       <textarea
         value={value}
         onChange={onChange}
+        name={name}
         rows={rows}
         onFocus={() => setIsFocused(true)}
         onBlur={(e) => setIsFocused(e.target.value !== "")}

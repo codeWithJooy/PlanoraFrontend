@@ -1,8 +1,9 @@
-import { ORG_LOGIN } from "../actionTypes/orgActionTypes";
+import { ORG_LOGIN, ORG_SIGNUP } from "../actionTypes/orgActionTypes";
 import { authApi } from "../../api";
 import { dispatchAction, getHeaders } from "./actionHelper";
 import { CodeAnalogy } from "../../Components/Toast/Toast";
 import { updateToast } from "./toastAction";
+import { ORG_DETAILS_ADDED } from "../actionTypes/orgDetails";
 export const orgSignup = async (data) => {
   try {
     const headers = getHeaders();
@@ -16,6 +17,14 @@ export const orgSignup = async (data) => {
 
     const response = await authApi.post("/register", org, headers);
     if (response.data.code === 200) {
+      dispatchAction(
+        ORG_SIGNUP,
+        {
+          org: response.data.org,
+          accessToken: response.data.accessToken,
+          refreshToken: response.data.refreshToken,
+        },
+      );
       updateToast({
         code: CodeAnalogy.SUCCESS,
         title: "Signup Successful",
@@ -32,6 +41,7 @@ export const orgSignup = async (data) => {
     });
   }
 };
+
 export const orgLogin = async (data) => {
   try {
     const headers = getHeaders();
@@ -39,9 +49,9 @@ export const orgLogin = async (data) => {
       orgEmail: data.email,
       orgPassword: data.password,
     };
-    
+
     const response = await authApi.post("/login", org, headers);
-    
+
     if (response.data.code === 200) {
       dispatchAction(ORG_LOGIN, {
         org: response.data.org,
@@ -52,11 +62,42 @@ export const orgLogin = async (data) => {
         code: CodeAnalogy.SUCCESS,
         title: "Login Successful",
         message: "Welcome To Planora",
-      })
+      });
       return response.data.org.status;
     } else return "";
   } catch (error) {
     console.log(error.message);
+  }
+};
+
+export const orgDetails = async (data) => {
+  try {
+    const headers = getHeaders();
+
+    const response = await authApi.post("/orgdetails", data, headers);
+    if (response.data.code === 200) {
+      dispatchAction(ORG_DETAILS_ADDED, response.data.orgdetails);
+      updateToast({
+        code: CodeAnalogy.SUCCESS,
+        title: "Organisational Details Added",
+        message: "Ready to Explore",
+      });
+      return true;
+    } else {
+      updateToast({
+        code: CodeAnalogy.ERROR,
+        title: "Something Went Wrong",
+        message: "Try Again Later",
+      });
+      return false;
+    }
+  } catch (error) {
+    console.log(error.message);
+    updateToast({
+      code: CodeAnalogy.ERROR,
+      title: "Something Went Wrong",
+      message: "Please Try Again",
+    });
   }
 };
 
