@@ -17,7 +17,7 @@ const Authentication = () => {
           {toggle === "signup" && (
             <Signup setToggle={setToggle} history={history} />
           )}
-          {toggle === "login" && <Login setToggle={setToggle} />}
+          {toggle === "login" && <Login setToggle={setToggle} history={history}/>}
         </div>
       </div>
     </div>
@@ -27,45 +27,68 @@ const Authentication = () => {
 export default Authentication;
 
 const Signup = ({ setToggle, history }) => {
-  const [orgDetails,setOrgDetails]=useState({
-    orgName:"",
-    orgPhone:"",
-    orgPassword:"",
-    orgEmail:"",
-    type:"startup"
-  })
+  const [orgDetails, setOrgDetails] = useState({
+    orgName: "",
+    orgPhone: "",
+    orgPassword: "",
+    orgEmail: "",
+    type: "startup",
+  });
   const handleOnChange = (e) => {
     setOrgDetails({
       ...orgDetails,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
-  
-  const handleSignup=async()=>{
-    console.log(orgDetails)
-    await orgSignup(orgDetails)
-  }
+
+  const handleSignup = async () => {
+    let data = await orgSignup(orgDetails);
+    if (data) {
+      history.push("/onboard");
+    }
+  };
   return (
     <div className="authCard">
       <div className="authHeader">
         <p>Welcome To Planora </p>
       </div>
       <div className="authInput">
-        <FloatingLabelInput label="Organisations Name" name="orgName" value={orgDetails.orgName} onChange={handleOnChange}/>
+        <FloatingLabelInput
+          label="Organisations Name"
+          name="orgName"
+          value={orgDetails.orgName}
+          onChange={handleOnChange}
+        />
       </div>
       <div className="authInput">
         <div className="authMultiInput">
-          <FloatingLabelInput label="Organisations Phone" name="orgPhone" value={orgDetails.orgPhone} onChange={handleOnChange}/>
+          <FloatingLabelInput
+            label="Organisations Phone"
+            name="orgPhone"
+            value={orgDetails.orgPhone}
+            onChange={handleOnChange}
+          />
         </div>
         <div className="authMultiInput">
-          <FloatingLabelInput label="Organisations Email" name="orgEmail" value={orgDetails.orgEmail} onChange={handleOnChange}/>
+          <FloatingLabelInput
+            label="Organisations Email"
+            name="orgEmail"
+            value={orgDetails.orgEmail}
+            onChange={handleOnChange}
+          />
         </div>
       </div>
       <div className="authInput">
-        <FloatingLabelInput label="Enter Password" name="orgPassword" value={orgDetails.orgPassword} onChange={handleOnChange}/>
+        <FloatingLabelInput
+          label="Enter Password"
+          type="password"
+          name="orgPassword"
+          value={orgDetails.orgPassword}
+          onChange={handleOnChange}
+        />
       </div>
       <div className="authInput">
-        <FloatingLabelInput label="Confirm Password" />
+        <FloatingLabelInput label="Confirm Password" type="password" />
       </div>
       <div className="authInput">
         <button onClick={handleSignup}>Sign Up</button>
@@ -82,7 +105,7 @@ const Signup = ({ setToggle, history }) => {
   );
 };
 
-const Login = ({ setToggle }) => {
+const Login = ({ setToggle, history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleEmailChange = (e) => {
@@ -92,9 +115,14 @@ const Login = ({ setToggle }) => {
     setPassword(e.target.value);
   };
   const handleLogin = async () => {
-    console.log("Login clicked");
-     await orgLogin({email,password});
-     //window.location.href = "/dashboard";
+    let data = await orgLogin({ email, password });
+    if (data === "new") {
+      history.push("/onboard");
+    } else if (data === "onboarded") {
+      history.push("/dashboard");
+    } else {
+      setToggle("signup");
+    }
   };
   return (
     <div className="authCard">

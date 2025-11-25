@@ -3,47 +3,58 @@ import { authApi } from "../../api";
 import { dispatchAction, getHeaders } from "./actionHelper";
 import { CodeAnalogy } from "../../Components/Toast/Toast";
 import { updateToast } from "./toastAction";
-export const orgSignup=async(data)=>{
-  try{
-    const headers=getHeaders();
-    const org={
-      orgName:data.orgName,
-      orgPhone:data.orgPhone,
-      orgEmail:data.orgEmail,
-      orgPassword:data.orgPassword,
-      type:data.type
-    }
-    const response=await authApi.post("/register",org,headers)
-    if(response.data.code===200){
-       updateToast({
+export const orgSignup = async (data) => {
+  try {
+    const headers = getHeaders();
+    const org = {
+      orgName: data.orgName,
+      orgPhone: data.orgPhone,
+      orgEmail: data.orgEmail,
+      orgPassword: data.orgPassword,
+      type: data.type,
+    };
+
+    const response = await authApi.post("/register", org, headers);
+    if (response.data.code === 200) {
+      updateToast({
         code: CodeAnalogy.SUCCESS,
         title: "Signup Successful",
         message: "Welcome To Planora",
-       })
-       return true;
+      });
+      return true;
     }
-  }catch(error){
-    console.log(error.message)
+  } catch (error) {
+    console.log(error.message);
+    updateToast({
+      code: CodeAnalogy.ERROR,
+      title: "Something Went Wrong",
+      message: "Please Try Again",
+    });
   }
-}
+};
 export const orgLogin = async (data) => {
   try {
-    const headers=getHeaders();
+    const headers = getHeaders();
     const org = {
       orgEmail: data.email,
       orgPassword: data.password,
     };
-    console.log(authApi)
-    const response = await authApi.post("/login", org,headers);
-    console.log(response)
+    
+    const response = await authApi.post("/login", org, headers);
+    
     if (response.data.code === 200) {
-      dispatchAction(ORG_LOGIN,{
-          org:response.data.org,
-          accessToken:response.data.accessToken,
-          refreshToken:response.data.refreshToken,
+      dispatchAction(ORG_LOGIN, {
+        org: response.data.org,
+        accessToken: response.data.accessToken,
+        refreshToken: response.data.refreshToken,
       });
-      return true;
-    } else return false;
+      updateToast({
+        code: CodeAnalogy.SUCCESS,
+        title: "Login Successful",
+        message: "Welcome To Planora",
+      })
+      return response.data.org.status;
+    } else return "";
   } catch (error) {
     console.log(error.message);
   }

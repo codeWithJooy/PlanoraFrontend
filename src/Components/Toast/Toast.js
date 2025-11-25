@@ -15,10 +15,10 @@ const Toast = () => {
   const { visible, code, title, message } = useSelector((state) => state.toast);
 
   useEffect(() => {
-    if (!visible) return;
-    // const timer = setTimeout(() => dispatch(revokeToast()), 3000);
-    // return () => clearTimeout(timer);
-  }, [visible, dispatch]);
+    setTimeout(() => {
+      revokeToast();
+    }, 2500);
+  }, [visible]);
 
   return (
     <div className="toast-wrapper">

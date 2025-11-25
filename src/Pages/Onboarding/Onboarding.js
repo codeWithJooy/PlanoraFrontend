@@ -7,6 +7,10 @@ import FloatingLabelTextarea from "../../Components/FloatingInput/FLoatingLabelT
 const Onboarding = () => {
   const [step, setStep] = useState(0);
   const history=useHistory();
+  const [onboard,setOnboard]=useState({
+    
+  })
+
   const totalSteps = 3;
 
   const nextStep = () => {
@@ -29,6 +33,7 @@ const Onboarding = () => {
       description: "Final step! You’ve completed all steps.",
     },
   ];
+
   const handleNextCard = () => {
     setStep(step + 1);
   };

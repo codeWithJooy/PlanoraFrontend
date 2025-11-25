@@ -39,7 +39,7 @@ const attachInterceptors = (instance) => {
   instance.interceptors.request.use(
     (config) => {
       const state = store.getState();
-      const token = state?.user?.accessToken;  // SAFE ACCESS
+      const token = state?.org?.accessToken; 
 
       console.log("Interceptor request running. Token:", token);
 

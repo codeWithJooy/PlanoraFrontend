@@ -14,5 +14,5 @@ export const updateToast = (params) => {
 };
 
 export const revokeToast = () => {
-  dispatch({ type: REVOKE_TOAST });
+  dispatch({ type: REVOKE_TOAST});
 };
