@@ -1,0 +1,2 @@
+export const EVENTS_FETCHED = "EVENTS_FETCHED";
+export const SINGLE_EVENT = "SINGLE_EVENT";

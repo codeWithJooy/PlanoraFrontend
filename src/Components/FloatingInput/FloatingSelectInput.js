@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import "./FloatingLabelInput.css";
 
-const FloatingSelectInput = ({ label, options = [], value, onChange }) => {
+const FloatingSelectInput = ({
+  label,
+  options = [],
+  name,
+  value,
+  onChange,
+}) => {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
@@ -9,6 +15,7 @@ const FloatingSelectInput = ({ label, options = [], value, onChange }) => {
       <select
         className="floating-input"
         value={value}
+        name={name}
         onChange={onChange}
         onFocus={() => setIsFocused(true)}
         onBlur={(e) => setIsFocused(e.target.value !== "")}
@@ -21,9 +28,7 @@ const FloatingSelectInput = ({ label, options = [], value, onChange }) => {
         ))}
       </select>
 
-      <label
-        className={`floating-label ${isFocused || value ? "active" : ""}`}
-      >
+      <label className={`floating-label ${isFocused || value ? "active" : ""}`}>
         {label}
       </label>
     </div>

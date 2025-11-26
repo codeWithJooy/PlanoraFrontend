@@ -22,10 +22,10 @@ const EventTable = ({ events }) => {
             </tr>
           ) : (
             events.map((event) => (
-              <tr key={event.id}>
-                <td>{event.name}</td>
-                <td>{event.date}</td>
-                <td>{event.location}</td>
+              <tr key={event.enentId}>
+                <td>{event.eventName}</td>
+                <td>{event.eventStart}</td>
+                <td>{event.eventLocation}</td>
                 <td>
                   <span className={`status ${event.status.toLowerCase()}`}>
                     {event.status}

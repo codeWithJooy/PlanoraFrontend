@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./FloatingLabelInput.css";
 
-const FloatingDateInput = ({ label, value, onChange }) => {
+const FloatingDateInput = ({ label, value, name, onChange }) => {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
@@ -9,6 +9,7 @@ const FloatingDateInput = ({ label, value, onChange }) => {
       <input
         type="date"
         value={value}
+        name={name}
         onChange={onChange}
         onFocus={() => setIsFocused(true)}
         onBlur={(e) => setIsFocused(e.target.value !== "")}

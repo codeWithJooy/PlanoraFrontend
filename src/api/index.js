@@ -8,18 +8,18 @@ const devApis = {
   AUTH: "http://localhost:5000/api/org",
   VENDOR: "http://localhost:5000/api/vendors",
   MEMBER: "http://localhost:5000/api/members",
-  USER: "http://localhost:5000/api/user",
-  CUSTOMER: "http://localhost:5000/api/customer",
-  ORDER: "http://localhost:5000/api/order",
+  EVENT: "http://localhost:5000/api/events",
+  SUBEVENT: "http://localhost:5000/api/subevents",
+
 };
 
 const prodApis = {
   AUTH: `${LIVE_URL}/api/auth`,
   VENDOR: `${LIVE_URL}/api/vendors`,
   MEMBER: `${LIVE_URL}/api/members`,
-  USER: `${LIVE_URL}/api/user`,
-  CUSTOMER: `${LIVE_URL}/api/customer`,
-  ORDER: `${LIVE_URL}/api/order`,
+  EVENT: `${LIVE_URL}/api/events`,
+  SUBEVENT: `${LIVE_URL}/api/subevents`,
+
 };
 
 const getApiUrls = () => {
@@ -33,9 +33,10 @@ export const APIS = getApiUrls();
 export const authApi = axios.create({ baseURL: APIS.AUTH });
 export const vendorApi = axios.create({ baseURL: APIS.VENDOR });
 export const memberApi = axios.create({ baseURL: APIS.MEMBER });
-export const userApi = axios.create({ baseURL: APIS.USER });
-export const customerApi = axios.create({ baseURL: APIS.CUSTOMER });
-export const orderApi = axios.create({ baseURL: APIS.ORDER });
+export const eventApi = axios.create({ baseURL: APIS.EVENT });
+export const subeventApi = axios.create({ baseURL: APIS.SUBEVENT });
+
+
 
 /**
  * Attach Interceptors
@@ -108,4 +109,4 @@ const attachInterceptors = (instance) => {
 };
 
 // Attach to all instances
-[authApi, userApi, customerApi, orderApi].forEach(attachInterceptors);
+[authApi].forEach(attachInterceptors);
