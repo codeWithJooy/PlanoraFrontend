@@ -1,23 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 import Header from "../../Components/Header/Header";
 import VendorsTable from "../../Components/Tables/VendorsTable";
 import FloatingSelectInput from "../../Components/FloatingInput/FloatingSelectInput";
 import FloatingLabelInput from "../../Components/FloatingInput/FloatingLabelInput";
+import { getAllVendors } from "../../redux/actions/vendorAction";
 
 const Vendors = () => {
   const [modal,setModal]=useState(false)
-  const vendorList = [
-    {
-      id: 1,
-      vendorName: "Abhishek",
-      vendorPhone: "9007453398",
-      vendorAlternative: "7980651358",
-      vendorEmail: "abhimicro3@gmail.com",
-      vendorCategory: "Catering",
-      vendorTasksDue:"10"
-    },
-  ];
+  const [vendorList,setVendorList]=useState([])
+
+  useEffect(()=>{
+    (async()=>{
+      let data=await getAllVendors()
+      setVendorList(data)
+    })()
+  },[])
   return (
     <div className="main">
       <div className="mainContainer">

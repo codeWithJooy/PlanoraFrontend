@@ -6,6 +6,8 @@ const LIVE_URL = "https://your-production-backend-url.com";
 
 const devApis = {
   AUTH: "http://localhost:5000/api/org",
+  VENDOR: "http://localhost:5000/api/vendors",
+  MEMBER: "http://localhost:5000/api/members",
   USER: "http://localhost:5000/api/user",
   CUSTOMER: "http://localhost:5000/api/customer",
   ORDER: "http://localhost:5000/api/order",
@@ -13,6 +15,8 @@ const devApis = {
 
 const prodApis = {
   AUTH: `${LIVE_URL}/api/auth`,
+  VENDOR: `${LIVE_URL}/api/vendors`,
+  MEMBER: `${LIVE_URL}/api/members`,
   USER: `${LIVE_URL}/api/user`,
   CUSTOMER: `${LIVE_URL}/api/customer`,
   ORDER: `${LIVE_URL}/api/order`,
@@ -27,6 +31,8 @@ export const APIS = getApiUrls();
 
 // Create Axios instances
 export const authApi = axios.create({ baseURL: APIS.AUTH });
+export const vendorApi = axios.create({ baseURL: APIS.VENDOR });
+export const memberApi = axios.create({ baseURL: APIS.MEMBER });
 export const userApi = axios.create({ baseURL: APIS.USER });
 export const customerApi = axios.create({ baseURL: APIS.CUSTOMER });
 export const orderApi = axios.create({ baseURL: APIS.ORDER });
