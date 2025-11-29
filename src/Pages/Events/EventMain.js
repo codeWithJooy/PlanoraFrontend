@@ -1,15 +1,37 @@
 import React, { useState, useEffect } from "react";
 import "./EventMain.css";
 import Sidebar from "../../Components/Sidebar/Sidebar";
+import FloatingLabelInput from "../../Components/FloatingInput/FloatingLabelInput";
+import FloatingSelectInput from "../../Components/FloatingInput/FloatingSelectInput";
+import FloatingDateInput from "../../Components/FloatingInput/FloatingDateInput";
+import FloatingTimeInput from "../../Components/FloatingInput/FLoatingTimeInput";
+import FloatingLabelTextarea from "../../Components/FloatingInput/FLoatingLabelTextArea";
+import { subEventRegister } from "../../redux/actions/subEventAction";
+import { useSelector } from "react-redux";
+import { getAllSubEvents } from "../../redux/actions/subEventAction";
 
 const EventMain = () => {
   const [activeTab, setActiveTab] = useState("Overview");
+  const [subEventModel, setSubEventModel] = useState(false);
   const tabs = ["Overview", "Sub Events", "Tasks", "Vendors", "Guests"];
-
+  const overviewSubevents = [
+    {
+      name: "Registration",
+      status: "Planned",
+    },
+    {
+      name: "Opening Ceremony",
+      status: "Ongoing",
+    },
+    {
+      name: "Keynote Address",
+      status: "Pending",
+    },
+  ];
   return (
     <div className="main">
       <div className="mainContainer">
-        <Sidebar />
+        <Sidebar page="Events" />
         <div className="mainPage">
           <div className="eventOverview">
             <div className="eventmaintitlesection">
@@ -35,29 +57,122 @@ const EventMain = () => {
             </div>
           </div>
           {/* Conditional rendering */}
-          {activeTab === "Overview" && <OverviewCard />}
-          {activeTab === "Sub Events" && <SubEvents />}
+          {activeTab === "Overview" && (
+            <OverviewCard overviewSubevents={overviewSubevents} />
+          )}
+          {activeTab === "Sub Events" && (
+            <SubEvents setSubEventModel={setSubEventModel} />
+          )}
           {activeTab === "Tasks" && <Tasks />}
           {activeTab === "Vendors" && <Vendors />}
           {activeTab === "Guests" && <Guests />}
         </div>
       </div>
-      
+      {subEventModel && <SubEventModal setSubEventModel={setSubEventModel} />}
     </div>
   );
 };
 
 export default EventMain;
 
-const OverviewCard = () => (
+const OverviewCard = ({ overviewSubevents }) => (
   <div className="eventmainsubSection">
     <div className="eventmainoverview">
       <div className="eventoverviewcard">
         <div className="eventoverviewname">
           <p className="overcardEventName">Event Name</p>
           <p className="overcardEventType">Event Type</p>
-          <div className="eventoverviewstatus">
-            <p>Status</p>
+        </div>
+        <div className="overviewmain">
+          <div className="overviewmainsub">
+            <p>Event Date</p>
+            <p>Jan 20,2026</p>
+          </div>
+          <div className="overviewmainsub">
+            <p>Event Date</p>
+            <p>Jan 20,2026</p>
+          </div>
+          <div className="overviewmainsub">
+            <p>Event Date</p>
+            <p>Jan 20,2026</p>
+          </div>
+        </div>
+      </div>
+      <div className="overviewfull">
+        <div className="overviewmainsubpart">
+          <div className="subpartHeader">
+            <p>Sub Events</p>
+          </div>
+          <div className="subpartmain">
+            {overviewSubevents &&
+              overviewSubevents.map((sub, key) => (
+                <div className="subpartUnit">
+                  <div className="subpartunittext">
+                    <p>{sub.name}</p>
+                  </div>
+                  <div className="subpartunittag">
+                    <span className={`statusTag ${sub.status.toLowerCase()}`}>
+                      {sub.status}
+                    </span>
+                  </div>
+                </div>
+              ))}
+          </div>
+          <div className="subpartmain">
+            <button>
+              See More
+            </button>
+          </div>
+        </div>
+
+        <div className="overviewmainsubpart">
+          <div className="subpartHeader">
+            <p>Sub Events</p>
+          </div>
+          <div className="subpartmain">
+            {overviewSubevents &&
+              overviewSubevents.map((sub, key) => (
+                <div className="subpartUnit">
+                  <div className="subpartunittext">
+                    <p>{sub.name}</p>
+                  </div>
+                  <div className="subpartunittag">
+                    <span className={`statusTag ${sub.status.toLowerCase()}`}>
+                      {sub.status}
+                    </span>
+                  </div>
+                </div>
+              ))}
+          </div>
+          <div className="subpartmain">
+            <button>
+              See More
+            </button>
+          </div>
+        </div>
+        <div className="overviewmainsubpart">
+          <div className="subpartHeader">
+            <p>Sub Events</p>
+          </div>
+          <div className="subpartmain">
+            {overviewSubevents &&
+              overviewSubevents.map((sub, key) => (
+                <div className="subpartUnit">
+                  <div className="subpartunittext">
+                    <p>{sub.name}</p>
+                  </div>
+                  <div className="subpartunittag">
+                    <span className={`statusTag ${sub.status.toLowerCase()}`}>
+                      {sub.status}
+                    </span>
+                  </div>
+                </div>
+              ))}
+          </div>
+          <div className="subpartmain">
+            <button>
+              See More
+            </button>
           </div>
         </div>
       </div>
@@ -65,36 +180,25 @@ const OverviewCard = () => (
   </div>
 );
 
-const SubEvents = () => {
-  const subEvents = [
-    {
-      name: "Opening Ceremony",
-      date: "2025-12-10",
-      location: "Main Hall",
-      status: "Planned",
-      tasks: "5 Tasks",
-    },
-    {
-      name: "Workshop: AI in 2025",
-      date: "2025-12-11",
-      location: "Auditorium B",
-      status: "Ongoing",
-      tasks: "8 Tasks",
-    },
-    {
-      name: "Closing Gala",
-      date: "2025-12-12",
-      location: "Banquet Hall",
-      status: "Pending",
-      tasks: "3 Tasks",
-    },
-  ];
-
+const SubEvents = ({ setSubEventModel }) => {
+  const { eventId } = useSelector((state) => state.singleEvent);
+  const [subEvents, setSubEvents] = useState([]);
+  useEffect(() => {
+    (async () => {
+      let data = await getAllSubEvents(eventId);
+      setSubEvents(data);
+    })();
+  }, []);
   return (
     <div className="eventmainsubSection">
       <div className="subeventHeader">
         <h2>Sub Events</h2>
-        <button className="addSubEventBtn">+ Add Sub Event</button>
+        <button
+          className="addSubEventBtn"
+          onClick={() => setSubEventModel(true)}
+        >
+          + Add Sub Event
+        </button>
       </div>
 
       <table className="subeventTable">
@@ -110,15 +214,15 @@ const SubEvents = () => {
         <tbody>
           {subEvents.map((se, i) => (
             <tr key={i}>
-              <td>{se.name}</td>
-              <td>{se.date}</td>
-              <td>{se.location}</td>
+              <td>{se.subEventName}</td>
+              <td>{se.subEventStartDate}</td>
+              <td>{se.subEventLocation}</td>
               <td>
-                <span className={`statusTag ${se.status.toLowerCase()}`}>
-                  {se.status}
+                <span className={`statusTag ${"Pending".toLowerCase()}`}>
+                  {"Pending"}
                 </span>
               </td>
-              <td>{se.tasks}</td>
+              <td>{se.tasks || 0}</td>
             </tr>
           ))}
         </tbody>
@@ -254,3 +358,120 @@ const Guests = () => (
     <p>Guests Section</p>
   </div>
 );
+
+const SubEventModal = ({ setSubEventModel }) => {
+  const { orgId, eventId } = useSelector((state) => state.singleEvent);
+  const [subEventData, setSubEventData] = useState({
+    orgId: orgId,
+    eventId: eventId,
+    subEventName: "",
+    subEventType: "",
+    subEventLocation: "",
+    subEventStartDate: "",
+    subEventStartTime: "",
+    subEventEndDate: "",
+    subEventEndTime: "",
+    subEventDescription: "",
+  });
+  const eventType = ["Wedding", "BirthDay", "Conference"];
+  const handleChange = (e) => {
+    setSubEventData({
+      ...subEventData,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handleSubEventRegister = async () => {
+    await subEventRegister(subEventData);
+    setSubEventModel(false);
+  };
+  return (
+    <div className="pageModal">
+      <div className="modal">
+        <img
+          src="assets/common/close.png"
+          className="modalClose"
+          onClick={() => setSubEventModel(false)}
+          alt=""
+        />
+        <div className="modalHeader">
+          <p>Create Sub Event</p>
+        </div>
+        <div className="modalUnit">
+          <FloatingLabelInput
+            label="Sub Event Name"
+            name="subEventName"
+            value={subEventData.subEventName}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="modalUnit">
+          <div className="modalUnitHalf">
+            <FloatingSelectInput
+              label="Sub Event Type"
+              options={eventType}
+              name="subEventType"
+              value={subEventData.subEventType}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="modalUnitHalf">
+            <FloatingLabelInput
+              label="Sub Event Location"
+              name="subEventLocation"
+              value={subEventData.subEventLocation}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="modalUnit">
+          <div className="modalUnitHalf">
+            <FloatingDateInput
+              label="Start Date"
+              name="subEventStartDate"
+              value={subEventData.subEventStartDate}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="modalUnitHalf">
+            <FloatingTimeInput
+              label="Start Time"
+              name="subEventStartTime"
+              value={subEventData.subEventStartTime}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="modalUnit">
+          <div className="modalUnitHalf">
+            <FloatingDateInput
+              label="End Date"
+              name="subEventEndDate"
+              value={subEventData.subEventEndDate}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="modalUnitHalf">
+            <FloatingTimeInput
+              label="End Time"
+              name="subEventEndTime"
+              value={subEventData.subEventEndime}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="modalUnit">
+          <FloatingLabelTextarea
+            label="Event Description"
+            name="subEventDescription"
+            value={subEventData.subEventDescription}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="modalButtonSection">
+          <button>Cancel</button>
+          <button onClick={handleSubEventRegister}>Create</button>
+        </div>
+      </div>
+    </div>
+  );
+};

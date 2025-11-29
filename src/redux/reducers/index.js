@@ -4,6 +4,7 @@ import toastReducer from "./toastReducer";
 import orgDetailsReducer from "./orgDetailsReducer";
 import eventReducer from "./eventReducer";
 import singleEventReducer from "./singleEventReducer";
+import subEventReducer from "./subEventReducer";
 
 const rootReducers=combineReducers({
     org:orgReducer,
@@ -11,6 +12,7 @@ const rootReducers=combineReducers({
     toast:toastReducer,
     events:eventReducer,
     singleEvent:singleEventReducer,
+    subEvents:subEventReducer
 })
 
 export default rootReducers;

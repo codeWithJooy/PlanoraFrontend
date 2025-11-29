@@ -71,7 +71,86 @@
 .eventsub:hover p {
   color: #333;
 }
+/*==================================================*/
+.eventoverviewcard{
+  width:100%;
+  box-shadow: 0 0 2px 2px lightgrey;
+  border-radius: 10px;
+  padding:10px 20px;
+}
+.overviewmain{
+  width:100%;
+  padding:20px 00px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.overviewmainsub{
+  width:33%;
+}
+.overviewfull{
+  width:100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding:30px 5px;
+}
+.overviewmainsubpart{
+  width:30%;
+  padding:40px 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 2px 2px lightgray;
+}
+.subpartHeader{
+  width:100%;
+}
+.subpartHeader p{
+  font-size: 25px;
+  font-weight: bold;
+}
+.subpartmain{
+  width:100%;
+  padding:15px 0px;
+}
+.subpartUnit{
+  width:100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding:10px 0px;
+}
+.subpartunittext{
+  width:70%;
+}
+.subpartunittext p{
+  font-weight: bold;
+}
+.subpartunittag{
+  width:30%;
+  text-align:center;
+}
+.statusTag {
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
 
+.statusTag.planned {
+  background-color: #e0f7fa;
+  color: #00796b;
+}
+
+.statusTag.ongoing {
+  background-color: #fff3e0;
+  color: #ef6c00;
+}
+
+.statusTag.pending {
+  background-color: #fce4ec;
+  color: #ad1457;
+}
+/*==================================================*/
 
 /*===================================================*/
 .eventmainsubSection{
