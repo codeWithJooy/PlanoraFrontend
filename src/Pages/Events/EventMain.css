@@ -22,14 +22,22 @@
   background: transparent;
   border:1px solid lightgray;
 }
-
+.overviewmainsubText{
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+.overviewmainText{
+  font-weight: bold;
+  color: #1f7a8c;
+}
 .eventmainTitle{
     width:100%;
     padding:0px 20px 20px 0px;
 }
 .eventmainTitle p{
-    font-size: 40px;
+    font-size: 35px;
     font-weight: bold;
+    color:#1f7a8c;
 }
 .eventmainsub {
   width: 100%;
@@ -57,14 +65,14 @@
 
 /* ✅ Active state */
 .eventsubselected {
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid #1f7a8c;
   padding: 18px 0;
 }
 
 /* ✅ Make sure height doesn’t change */
 .eventsubselected p {
   font-size: 20px;
-  color: black;
+  color: #1f7a8c
 }
 
 /* Optional hover effect */
@@ -74,9 +82,14 @@
 /*==================================================*/
 .eventoverviewcard{
   width:100%;
-  box-shadow: 0 0 2px 2px lightgrey;
+  box-shadow: 0 0px 3px 3px #e1e5f2;
   border-radius: 10px;
   padding:10px 20px;
+  cursor: pointer;
+}
+.eventoverviewcard:hover {
+  box-shadow: 0 2px 8px ;
+  transform: translateY(-2px);
 }
 .overviewmain{
   width:100%;
@@ -95,10 +108,15 @@
   padding:30px 5px;
 }
 .overviewmainsubpart{
-  width:30%;
-  padding:40px 10px;
+  width:32%;
+  padding:20px 10px 30px;
   border-radius: 10px;
-  box-shadow: 0 0 2px 2px lightgray;
+  box-shadow: 0 0px 3px 3px #e1e5f2;
+  cursor: pointer;
+}
+.overviewmainsubpart:hover{
+  box-shadow: 0 2px 8px ;
+  transform: translateY(-2px);
 }
 .subpartHeader{
   width:100%;
@@ -106,6 +124,7 @@
 .subpartHeader p{
   font-size: 25px;
   font-weight: bold;
+  color:#1f7a8c;
 }
 .subpartmain{
   width:100%;
@@ -161,6 +180,7 @@
 .overcardEventName{
     font-size: 20px;
     font-weight: bold;
+    color: #1f7a8c;
 }
 .overcardEventType{
     font-size: 15px;
@@ -182,26 +202,34 @@
     justify-content: space-between;
     margin-bottom: 20px;
     padding: 0px 10px;
-
+    position: relative;
   }
-  
+  .selectGuests{
+    width:200px;
+    position: absolute;
+    right:180px;
+    margin-bottom: 30px;
+  }
   .subeventHeader h2 {
     font-size: 28px;
     font-weight: bold;
   }
   
   .addSubEventBtn {
-    background-color: black;
+    background-color: #1f7a8c;
     color: white;
     border: none;
     border-radius: 10px;
-    padding: 10px 20px;
+    padding: 15px 20px;
     cursor: pointer;
     transition: 0.3s;
+    border:1px solid #1f7a8c
   }
   
   .addSubEventBtn:hover {
-    background-color: #444;
+    background-color: #fff;
+    color: #1f7a8c;
+    border:1px solid #1f7a8c
   }
   
   /* Table Styling */
@@ -263,19 +291,6 @@
     font-weight: bold;
   }
   
-  .addSubEventBtn {
-    background-color: black;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .addSubEventBtn:hover {
-    background-color: #444;
-  }
   
   /* Table reused */
   .subeventTable {
@@ -320,3 +335,35 @@
     background-color: #fce4ec;
     color: #ad1457;
   }
+
+  /*==================================================*/
+  .noGuestsContainer {
+    margin-top: 30px;
+    padding: 40px;
+    text-align: center;
+    background: #fafafa;
+    border: 1px dashed #bbb;
+    border-radius: 10px;
+  }
+  
+  .noGuestsText {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 15px;
+  }
+  
+  .uploadGuestsBtn {
+    padding: 10px 20px;
+    background: #4a63e7;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+  }
+  
+  .uploadGuestsBtn:hover {
+    background: #3d53c7;
+  }
+  
+  /*==================================================*/

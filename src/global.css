@@ -34,6 +34,7 @@
 .pagePath p{
     font-size: 40px;
     font-weight:bold;
+    color:#1f7a8c;
 }
 .pageUser{
     position: absolute;

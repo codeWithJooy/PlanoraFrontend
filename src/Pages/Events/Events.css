@@ -21,7 +21,7 @@
     font-size: 18px;
 }
 .tabSelected{
-    border-bottom: 1px solid lightcoral;
+    border-bottom: 1px solid #1f7a8c;
 }
 .tabSelected p{
     font-weight: bold;
@@ -38,6 +38,10 @@
 }
 .eventCardSection{
     width:100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap;
     height:calc(100% - 100px);
     padding-right: 100px;
 }

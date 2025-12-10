@@ -11,7 +11,7 @@ const TeamsTable = ({ teams }) => {
             <th>Phone</th>
             <th>Alternative Number</th>
             <th>Email</th>
-            <th>Task Due</th>
+            <th>Designation</th>
           </tr>
         </thead>
 
@@ -25,11 +25,11 @@ const TeamsTable = ({ teams }) => {
           ) : (
             teams.map((team) => (
               <tr key={team.id}>
-                <td>{team.teamName}</td>
-                <td>{team.teamPhone}</td>
-                <td>{team.teamAlternative}</td>
-                <td>{team.teamEmail}</td>
-                <td>{team.teamTasksDue}</td>
+                <td>{team.memberName}</td>
+                <td>{team.memberPhone}</td>
+                <td>{team.memberAlternative}</td>
+                <td>{team.memberEmail}</td>
+                <td>{team.memberDesignation}</td>
               </tr>
             ))
           )}

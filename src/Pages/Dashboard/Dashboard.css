@@ -30,10 +30,11 @@
   .upcomingCard {
     display: flex;
     padding: 15px;
-    width: 380px;
+    width: 30%;
     border-radius: 12px;
     background: white;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 0 10px #1f7a8c;
+    position: relative;
   }
   
   .eventImage {
@@ -51,6 +52,17 @@
   
   .eventInfo p {
     color: gray;
+  }
+  .eventLoc{
+    width:100%;
+    position: absolute;
+    bottom:20px;
+    left:120px;
+  }
+  .eventLoc p{
+    font-size: 16px;
+    font-weight: bold;
+    color: #1f7a8c;
   }
   
   /* Stats */
@@ -117,10 +129,18 @@
     text-decoration: line-through;
     color: gray;
   }
-  
+  .memberSection{
+    margin-top: 50px;
+    width:100%;
+    display:flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
   /* Vendors */
   .vendorsSection {
     margin-top: 40px;
+    width:50%;
   }
   
   .vendorsGrid {
@@ -134,7 +154,7 @@
     background: white;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 0 10px #1f7a8c;
   }
   
   .vendorImage {

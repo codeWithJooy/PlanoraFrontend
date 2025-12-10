@@ -1,89 +1,124 @@
 .event-card {
-    background: #fff;
-    border-radius: 12px;
-    padding: 16px;
-    box-shadow: 0 0px 5px 4px rgba(0, 0, 0, 0.08);
-    transition: all 0.2s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  
-  .event-card:hover {
-    box-shadow: 0 2px 8px lightblue;
-    transform: translateY(-2px);
-  }
-  
-  .event-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-  
-  .event-card-header h3 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #333;
-  }
-  
-  .status {
-    font-size: 0.8rem;
-    padding: 4px 8px;
-    border-radius: 6px;
-    text-transform: capitalize;
-  }
-  
-  .status.upcoming {
-    background-color: #e6f3ff;
-    color: #007bff;
-  }
-  
-  .status.completed {
-    background-color: #e8f8ec;
-    color: #28a745;
-  }
-  
-  .status.cancelled {
-    background-color: #fdeaea;
-    color: #dc3545;
-  }
-  
-  .event-date,
-  .event-location {
-    font-size: 0.9rem;
-    color: #666;
-    margin-bottom: 6px;
-  }
-  
-  .event-card-footer {
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-    margin-top: 12px;
-  }
-  
-  button {
-    border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.85rem;
-  }
-  
-  .view-btn {
-    background-color: #f1f5f9;
-    color: #333;
-  }
-  
-  .edit-btn {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .delete-btn {
-    background-color: #dc3545;
-    color: white;
-  }
-  
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px 16px;
+  box-shadow: 0 0px 3px 3px #e1e5f2;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30%;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.event-card:hover {
+  box-shadow: 0 2px 8px;
+  transform: translateY(-2px);
+}
+
+.eventImageSection {
+  width: 100%;
+  height: 300px;
+}
+
+.eventImageSection img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* Title + Status Row */
+.event-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.event-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  text-align: left;
+  flex: 1;
+  color: #1f7a8c;
+}
+
+/* Push status to the right */
+.status {
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  text-transform: capitalize;
+  margin-left: 12px;
+}
+
+.status.upcoming {
+  background-color: #e6f3ff;
+  color: #007bff;
+}
+
+.status.completed {
+  background-color: #e8f8ec;
+  color: #28a745;
+}
+
+.status.cancelled {
+  background-color: #fdeaea;
+  color: #dc3545;
+}
+
+/* Date + Location in one line */
+.event-info-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 10px 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.separator {
+  font-weight: bold;
+}
+
+/* Buttons */
+.event-card-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: auto;
+}
+
+button {
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+ 
+}
+
+.view-btn {
+  background-color: #f1f5f9;
+  color: #333;
+  padding: 15px 12px;
+
+}
+
+.edit-btn {
+  background-color: #1f7a8c!important;
+  color: white;
+  padding: 15px 12px;
+  width:100px;
+}
+
+.delete-btn {
+  background-color: white!important;
+  color: #1f7a8c!important;
+  border:1px solid #1f7a8c;
+  padding: 15px 12px;
+  width:100px;
+}

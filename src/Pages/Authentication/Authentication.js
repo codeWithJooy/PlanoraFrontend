@@ -11,7 +11,8 @@ const Authentication = () => {
     <div className="authMain">
       <div className="authContainer">
         <div className="authImage">
-          <img src="assets/authentication/authentication.jpg" />
+          {toggle === 'signup' && <img src="assets/authentication/wedding.webp" />}
+          {toggle === 'login' && <img src="assets/authentication/events.jpg" />}
         </div>
         <div className="authSection">
           {toggle === "signup" && (

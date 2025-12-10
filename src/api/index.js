@@ -10,7 +10,8 @@ const devApis = {
   MEMBER: "http://localhost:5000/api/members",
   EVENT: "http://localhost:5000/api/events",
   SUBEVENT: "http://localhost:5000/api/subevents",
-
+  GUEST: "http://localhost:5000/api/guests",
+  DROP: "http://localhost:5000/api/dropdown",
 };
 
 const prodApis = {
@@ -19,7 +20,7 @@ const prodApis = {
   MEMBER: `${LIVE_URL}/api/members`,
   EVENT: `${LIVE_URL}/api/events`,
   SUBEVENT: `${LIVE_URL}/api/subevents`,
-
+  GUEST: `${LIVE_URL}/api/guests`,
 };
 
 const getApiUrls = () => {
@@ -35,8 +36,8 @@ export const vendorApi = axios.create({ baseURL: APIS.VENDOR });
 export const memberApi = axios.create({ baseURL: APIS.MEMBER });
 export const eventApi = axios.create({ baseURL: APIS.EVENT });
 export const subeventApi = axios.create({ baseURL: APIS.SUBEVENT });
-
-
+export const guestApi = axios.create({ baseURL: APIS.GUEST });
+export const dropApi = axios.create({ baseURL: APIS.DROP });
 
 /**
  * Attach Interceptors
@@ -46,7 +47,7 @@ const attachInterceptors = (instance) => {
   instance.interceptors.request.use(
     (config) => {
       const state = store.getState();
-      const token = state?.org?.accessToken; 
+      const token = state?.org?.accessToken;
 
       console.log("Interceptor request running. Token:", token);
 

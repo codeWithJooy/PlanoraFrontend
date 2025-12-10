@@ -23,10 +23,10 @@ export const vendorRegister = async (data) => {
   }
 };
 
-export const getAllVendors = async () => {
+export const getAllVendors = async (orgId) => {
   try {
     const headers=getHeaders();
-    const response=await vendorApi.get("/getvendors",headers)
+    const response=await vendorApi.get(`/${orgId}`,headers)
     if(response.data.code===200){
         dispatchAction(
             VENDORS_FETCHED,

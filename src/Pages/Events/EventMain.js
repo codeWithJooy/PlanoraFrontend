@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Papa from "papaparse";
 import "./EventMain.css";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 import FloatingLabelInput from "../../Components/FloatingInput/FloatingLabelInput";
@@ -9,22 +10,49 @@ import FloatingLabelTextarea from "../../Components/FloatingInput/FLoatingLabelT
 import { subEventRegister } from "../../redux/actions/subEventAction";
 import { useSelector } from "react-redux";
 import { getAllSubEvents } from "../../redux/actions/subEventAction";
+import { getAllGuests, guestUpload } from "../../redux/actions/guestsAction";
+import FloatingMultiSelectInput from "../../Components/FloatingInput/FloatingMultiSelectInput";
+import FloatingMultiSelectDropdown from "../../Components/FloatingInput/FloatingMultiSelectDropdown";
+import { getVendorsDrop } from "../../redux/actions/dropdownAction";
 
 const EventMain = () => {
   const [activeTab, setActiveTab] = useState("Overview");
   const [subEventModel, setSubEventModel] = useState(false);
-  const tabs = ["Overview", "Sub Events", "Tasks", "Vendors", "Guests"];
+  const [guestModal, setGuestModal] = useState(false);
+  const [taskModal, setTaskModal] = useState(false);
+  const tabs = [
+    "Overview",
+    "Guests",
+    "Sub Events",
+    "Tasks",
+    "Vendors",
+    "Messages",
+  ];
   const overviewSubevents = [
     {
-      name: "Registration",
-      status: "Planned",
-    },
-    {
-      name: "Opening Ceremony",
+      name: "Mehendi Ceremony",
       status: "Ongoing",
     },
     {
-      name: "Keynote Address",
+      name: "Sangeet Ceremony",
+      status: "Planned",
+    },
+    {
+      name: "Sath Pehere",
+      status: "Pending",
+    },
+  ];
+  const overviewTasks = [
+    {
+      name: "Pickup Guests From Station",
+      status: "Ongoing",
+    },
+    {
+      name: "Allot Room To Guest",
+      status: "Planned",
+    },
+    {
+      name: "Serve Dinner",
       status: "Pending",
     },
   ];
@@ -36,7 +64,7 @@ const EventMain = () => {
           <div className="eventOverview">
             <div className="eventmaintitlesection">
               <div className="eventmainTitle">
-                <p>Event Name</p>
+                <p>Hemant & Neetu Wedding</p>
               </div>
               <div className="eventmainsub">
                 {tabs.map((tab) => (
@@ -58,43 +86,48 @@ const EventMain = () => {
           </div>
           {/* Conditional rendering */}
           {activeTab === "Overview" && (
-            <OverviewCard overviewSubevents={overviewSubevents} />
+            <OverviewCard
+              overviewSubevents={overviewSubevents}
+              overviewTasks={overviewTasks}
+            />
           )}
           {activeTab === "Sub Events" && (
             <SubEvents setSubEventModel={setSubEventModel} />
           )}
-          {activeTab === "Tasks" && <Tasks />}
+          {activeTab === "Tasks" && <Tasks setTaskModal={setTaskModal} />}
           {activeTab === "Vendors" && <Vendors />}
-          {activeTab === "Guests" && <Guests />}
+          {activeTab === "Guests" && <Guests setGuestModal={setGuestModal} />}
         </div>
       </div>
       {subEventModel && <SubEventModal setSubEventModel={setSubEventModel} />}
+      {guestModal && <GuestModal setGuestModal={setGuestModal} />}
+      {taskModal && <TaskModal setTaskModal={setTaskModal} />}
     </div>
   );
 };
 
 export default EventMain;
 
-const OverviewCard = ({ overviewSubevents }) => (
+const OverviewCard = ({ overviewSubevents, overviewTasks }) => (
   <div className="eventmainsubSection">
     <div className="eventmainoverview">
       <div className="eventoverviewcard">
         <div className="eventoverviewname">
-          <p className="overcardEventName">Event Name</p>
-          <p className="overcardEventType">Event Type</p>
+          <p className="overcardEventName">Hemant & Neetu Wedding</p>
+          <p className="overcardEventType">Wedding</p>
         </div>
         <div className="overviewmain">
           <div className="overviewmainsub">
-            <p>Event Date</p>
-            <p>Jan 20,2026</p>
+            <p className="overviewmainsubText"> Location</p>
+            <p className="overviewmainText">Kolkata</p>
           </div>
           <div className="overviewmainsub">
-            <p>Event Date</p>
-            <p>Jan 20,2026</p>
+            <p className="overviewmainsubText">Start Date</p>
+            <p className="overviewmainText">Jan 20,2026</p>
           </div>
           <div className="overviewmainsub">
-            <p>Event Date</p>
-            <p>Jan 20,2026</p>
+            <p className="overviewmainsubText">End Date</p>
+            <p className="overviewmainText">Jan 20,2026</p>
           </div>
         </div>
       </div>
@@ -119,19 +152,17 @@ const OverviewCard = ({ overviewSubevents }) => (
               ))}
           </div>
           <div className="subpartmain">
-            <button>
-              See More
-            </button>
+            <button>See More</button>
           </div>
         </div>
 
         <div className="overviewmainsubpart">
           <div className="subpartHeader">
-            <p>Sub Events</p>
+            <p>Tasks</p>
           </div>
           <div className="subpartmain">
-            {overviewSubevents &&
-              overviewSubevents.map((sub, key) => (
+            {overviewTasks &&
+              overviewTasks.map((sub, key) => (
                 <div className="subpartUnit">
                   <div className="subpartunittext">
                     <p>{sub.name}</p>
@@ -145,14 +176,12 @@ const OverviewCard = ({ overviewSubevents }) => (
               ))}
           </div>
           <div className="subpartmain">
-            <button>
-              See More
-            </button>
+            <button>See More</button>
           </div>
         </div>
         <div className="overviewmainsubpart">
           <div className="subpartHeader">
-            <p>Sub Events</p>
+            <p>Vendors</p>
           </div>
           <div className="subpartmain">
             {overviewSubevents &&
@@ -170,9 +199,7 @@ const OverviewCard = ({ overviewSubevents }) => (
               ))}
           </div>
           <div className="subpartmain">
-            <button>
-              See More
-            </button>
+            <button>See More</button>
           </div>
         </div>
       </div>
@@ -231,7 +258,7 @@ const SubEvents = ({ setSubEventModel }) => {
   );
 };
 
-const Tasks = () => {
+const Tasks = ({ setTaskModal }) => {
   const tasks = [
     {
       task: "Book Venue",
@@ -260,7 +287,14 @@ const Tasks = () => {
     <div className="eventmainsubSection">
       <div className="subeventHeader">
         <h2>Tasks</h2>
-        <button className="addSubEventBtn">+ Add Task</button>
+        <button
+          className="addSubEventBtn"
+          onClick={() => {
+            setTaskModal(true);
+          }}
+        >
+          + Add Task
+        </button>
       </div>
 
       <table className="subeventTable">
@@ -353,11 +387,106 @@ const Vendors = () => {
   );
 };
 
-const Guests = () => (
-  <div className="eventmainsubSection">
-    <p>Guests Section</p>
-  </div>
-);
+const Guests = ({ setGuestModal }) => {
+  const { orgId, eventId } = useSelector((state) => state.singleEvent);
+  const [guestsList, setGuestsList] = React.useState([]);
+  const [fetchData, setFetchData] = useState(true);
+  const fileInputRef = React.useRef();
+
+  const handleCSVClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleCSVUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    parseCSV(file);
+  };
+
+  const parseCSV = async (file) => {
+    const parsedData = await new Promise((resolve, reject) => {
+      Papa.parse(file, {
+        header: true,
+        skipEmptyLines: true,
+        complete: function (results) {
+          resolve(results.data);
+        },
+        error: function (err) {
+          reject(err);
+        },
+      });
+    });
+
+    console.log("Parsed CSV", parsedData);
+
+    await guestUpload({
+      orgId,
+      eventId,
+      guests: parsedData,
+    });
+    setFetchData(true);
+  };
+
+  useEffect(() => {
+    (async () => {
+      if (!fetchData) return;
+      let data = await getAllGuests();
+      setGuestsList(data);
+      setFetchData(false);
+    })();
+  }, [fetchData]);
+
+  return (
+    <div className="eventmainsubSection">
+      <div className="subeventHeader">
+        <h2>Guests</h2>
+        <button className="addSubEventBtn" onClick={() => setGuestModal(true)}>
+          + Add Guest
+        </button>
+      </div>
+
+      {guestsList.length === 0 ? (
+        <div className="noGuestsContainer">
+          <p className="noGuestsText">No Guests Added</p>
+
+          <button className="uploadGuestsBtn" onClick={handleCSVClick}>
+            Upload Guests (CSV)
+          </button>
+
+          {/* Hidden Input */}
+          <input
+            type="file"
+            accept=".csv"
+            ref={fileInputRef}
+            style={{ display: "none" }}
+            onChange={handleCSVUpload}
+          />
+        </div>
+      ) : (
+        <table className="subeventTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Age</th>
+              <th>Phone</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            {guestsList.map((v, i) => (
+              <tr key={i}>
+                <td>{v.guestName}</td>
+                <td>{v.guestAge}</td>
+                <td>{v.guestPhone}</td>
+                <td>{v.guestEmail}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
+};
 
 const SubEventModal = ({ setSubEventModel }) => {
   const { orgId, eventId } = useSelector((state) => state.singleEvent);
@@ -470,6 +599,205 @@ const SubEventModal = ({ setSubEventModel }) => {
         <div className="modalButtonSection">
           <button>Cancel</button>
           <button onClick={handleSubEventRegister}>Create</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const GuestModal = ({ setGuestModal }) => {
+  const { orgId, eventId } = useSelector((state) => state.singleEvent);
+  const [guestData, setGuestData] = useState({
+    orgId: orgId,
+    eventId: eventId,
+    guestName: "",
+    guestAge: "",
+    guestPhone: "",
+    guestEmail: "",
+  });
+
+  const handleChange = (e) => {
+    setGuestData({
+      ...guestData,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handleSubEventRegister = async () => {
+    //await subEventRegister(subEventData);
+    setGuestModal(false);
+  };
+  return (
+    <div className="pageModal">
+      <div className="modal">
+        <img
+          src="assets/common/close.png"
+          className="modalClose"
+          onClick={() => setGuestModal(false)}
+          alt=""
+        />
+        <div className="modalHeader">
+          <p>Add Guest</p>
+        </div>
+        <div className="modalUnit">
+          <div className="modalUnitHalf">
+            <FloatingLabelInput
+              label="Guest Name"
+              name="guestName"
+              value={guestData.guestName}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="modalUnitHalf">
+            <FloatingLabelInput
+              label="Guest Age"
+              name="guestAge"
+              value={guestData.guestAge}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="modalUnit">
+          <div className="modalUnitHalf">
+            <FloatingLabelInput
+              label="Guest Phone"
+              name="guestPhone"
+              value={guestData.guestPhone}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="modalUnitHalf">
+            <FloatingLabelInput
+              label="Guest Email"
+              name="guestEmail"
+              value={guestData.guestEmail}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="modalButtonSection">
+          <button>Cancel</button>
+          <button onClick={handleSubEventRegister}>Create</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const TaskModal = ({ setTaskModal }) => {
+  const { orgId, eventId } = useSelector((state) => state.singleEvent);
+  const [taskData, setTaskData] = useState({
+    orgId: orgId,
+    eventId: eventId,
+    taskName: "",
+    taskDescription: "",
+    taskDue: "",
+    taskMembers: [],
+    taskVendors: [],
+    taskMsgMember: "",
+    taskMsgVendor: "",
+    taskStatus: "Created",
+  });
+  const [vendorData, setVendorData] = useState([]);
+
+  const handleChange = (e) => {
+    setTaskData({
+      ...taskData,
+      [e.target.name]: e.target.value,
+    });
+  };
+  // const handleSubEventRegister = async () => {
+  //   await subEventRegister(subEventData);
+  //   setSubEventModel(false);
+  // };
+
+  const handleTaskCreate = () => {
+    console.log(taskData);
+  };
+  useEffect(() => {
+    (async () => {
+      let venData = await getVendorsDrop();
+      setVendorData(venData);
+    })();
+  }, []);
+  return (
+    <div className="pageModal">
+      <div className="modal">
+        <img
+          src="assets/common/close.png"
+          className="modalClose"
+          onClick={() => setTaskModal(false)}
+          alt=""
+        />
+        <div className="modalHeader">
+          <p>Create Task</p>
+        </div>
+        <div className="modalUnit">
+          <div className="modalUnitHalf">
+            <FloatingLabelInput
+              label="Task Name"
+              name="taskName"
+              value={taskData.taskName}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="modalUnitHalf">
+            <FloatingDateInput
+              label="Task Due Date"
+              name="taskDue"
+              value={taskData.taskDue}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="modalUnit">
+          <div className="modalUnitHalf">
+            <FloatingMultiSelectDropdown
+              label="Task Vendors"
+              name="taskVendors"
+              value={taskData.taskVendors}
+              onChange={handleChange}
+              options={vendorData}
+            />
+          </div>
+          <div className="modalUnitHalf">
+            <FloatingLabelInput
+              label="Message For Vendors"
+              name="taskMsgVendor"
+              value={taskData.taskMsgVendor}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="modalUnit">
+          <div className="modalUnitHalf">
+            <FloatingMultiSelectDropdown
+              label="Task Members"
+              name="taskMembers"
+              value={taskData.taskMembers}
+              onChange={handleChange}
+              options={vendorData}
+            />
+          </div>
+          <div className="modalUnitHalf">
+            <FloatingLabelInput
+              label="Message For Members"
+              name="taskMsgMember"
+              value={taskData.taskMsgMember}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="modalUnit">
+          <FloatingLabelTextarea
+            label="Task Description"
+            name="taskDescription"
+            value={taskData.taskDescription}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="modalButtonSection">
+          <button>Cancel</button>
+          <button onClick={handleTaskCreate}>Create</button>
         </div>
       </div>
     </div>

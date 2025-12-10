@@ -117,7 +117,7 @@ const Onboarding = () => {
         <div className="onboardMainSection">
           <div className="onboardCard">
             <div className="onboardLeft">
-              <img src="assets/authentication/authentication.jpg" />
+              <img src="assets/onboarding/event.jpg" />
             </div>
             <div className="onboardRight">
               <div className="onBoardTitle">
@@ -141,7 +141,7 @@ const Onboarding = () => {
         <div className="onboardMainSection">
           <div className="onboardCard">
             <div className="onboardLeft">
-              <img src="assets/authentication/authentication.jpg" />
+              <img src="assets/onboarding/weddingNew.jpg" />
             </div>
             <div className="onboardRight">
               <div className="onBoardTitle">

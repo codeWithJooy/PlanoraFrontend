@@ -95,4 +95,107 @@ select.floating-input {
     font-size: 12px;
     color: #007bff;
   }
+
+/* Container */
+.floating-dropdown-container {
+  position: relative;
+  width: 100%;
+  margin-top: 24px;
+  font-family: sans-serif;
+}
+
+/* Header (display area) */
+.dropdown-header {
+  border-bottom: 1px solid #777;
+  padding: 12px 0 8px 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  color: #333;
+}
+
+.selected-values {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Arrow */
+.arrow {
+  transition: transform 0.2s ease;
+}
+
+.arrow.open {
+  transform: rotate(180deg);
+}
+
+/* Floating Label */
+.floating-label {
+  position: absolute;
+  left: 0;
+  top: 12px;
+  font-size: 16px;
+  color: #777;
+  transition: all 0.2s ease;
+  pointer-events: none;
+}
+
+.floating-label.active {
+  top: -6px;
+  font-size: 12px;
+  color: #007bff;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  position: absolute;
+  top: 48px;
+  left: 0;
+  width: 100%;
+  background: white;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  max-height: 240px;
+  overflow: hidden;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Search box */
+.search-box {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  outline: none;
+}
+
+/* Scroll area */
+.options-list {
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+/* Option Item */
+.option-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.option-item:hover {
+  background: #f5f5f5;
+}
+
+.no-options {
+  padding: 12px;
+  color: #999;
+  text-align: center;
+}
+
+
   
