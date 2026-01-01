@@ -10,16 +10,45 @@ import FloatingLabelTextarea from "../../Components/FloatingInput/FLoatingLabelT
 import { subEventRegister } from "../../redux/actions/subEventAction";
 import { useSelector } from "react-redux";
 import { getAllSubEvents } from "../../redux/actions/subEventAction";
-import { getAllGuests, guestUpload } from "../../redux/actions/guestsAction";
+import {
+  addSingleGuest,
+  getAllGuests,
+  getGuestsByEventId,
+  guestUpload,
+} from "../../redux/actions/guestsAction";
 import FloatingMultiSelectInput from "../../Components/FloatingInput/FloatingMultiSelectInput";
 import FloatingMultiSelectDropdown from "../../Components/FloatingInput/FloatingMultiSelectDropdown";
-import { getVendorsDrop } from "../../redux/actions/dropdownAction";
-
+import {
+  getMembersDrop,
+  getSubEventDrop,
+  getVendorsDrop,
+} from "../../redux/actions/dropdownAction";
+import {
+  getAllTasksByEvent,
+  taskRegister,
+} from "../../redux/actions/taskAction";
+import { getGuestsDropdown } from "../../redux/actions/dropdownAction";
+import {
+  fetchMessages,
+  messageRegister,
+} from "../../redux/actions/messageAction";
+import { getAllVendorsEvent } from "../../redux/actions/vendorAction";
+import {
+  getOverviewGuests,
+  getOverviewSubEvents,
+  getOverviewTasks,
+} from "../../redux/actions/eventAction";
+import {
+  formatDateWithSuffix,
+  formatISODateWithSuffix,
+} from "../../Helpers/formatDate";
 const EventMain = () => {
+  const { eventName } = useSelector((state) => state.singleEvent);
   const [activeTab, setActiveTab] = useState("Overview");
   const [subEventModel, setSubEventModel] = useState(false);
   const [guestModal, setGuestModal] = useState(false);
   const [taskModal, setTaskModal] = useState(false);
+  const [messageModal, setMessageModal] = useState(false);
   const tabs = [
     "Overview",
     "Guests",
@@ -64,7 +93,7 @@ const EventMain = () => {
           <div className="eventOverview">
             <div className="eventmaintitlesection">
               <div className="eventmainTitle">
-                <p>Hemant & Neetu Wedding</p>
+                <p>{eventName}</p>
               </div>
               <div className="eventmainsub">
                 {tabs.map((tab) => (
@@ -89,6 +118,7 @@ const EventMain = () => {
             <OverviewCard
               overviewSubevents={overviewSubevents}
               overviewTasks={overviewTasks}
+              setActiveTab={setActiveTab}
             />
           )}
           {activeTab === "Sub Events" && (
@@ -97,115 +127,155 @@ const EventMain = () => {
           {activeTab === "Tasks" && <Tasks setTaskModal={setTaskModal} />}
           {activeTab === "Vendors" && <Vendors />}
           {activeTab === "Guests" && <Guests setGuestModal={setGuestModal} />}
+          {activeTab === "Messages" && (
+            <Messages setMessageModal={setMessageModal} />
+          )}
         </div>
       </div>
       {subEventModel && <SubEventModal setSubEventModel={setSubEventModel} />}
       {guestModal && <GuestModal setGuestModal={setGuestModal} />}
       {taskModal && <TaskModal setTaskModal={setTaskModal} />}
+      {messageModal && <MessageModal setMessageModal={setMessageModal} />}
     </div>
   );
 };
 
 export default EventMain;
 
-const OverviewCard = ({ overviewSubevents, overviewTasks }) => (
-  <div className="eventmainsubSection">
-    <div className="eventmainoverview">
-      <div className="eventoverviewcard">
-        <div className="eventoverviewname">
-          <p className="overcardEventName">Hemant & Neetu Wedding</p>
-          <p className="overcardEventType">Wedding</p>
+const OverviewCard = ({ overviewSubevents, overviewTasks, setActiveTab }) => {
+  const {
+    orgId,
+    eventId,
+    eventName,
+    eventLocation,
+    eventType,
+    eventStart,
+    eventEnd,
+  } = useSelector((state) => state.singleEvent);
+  const [subEvents, setSubEvents] = useState([]);
+  const [guests, setGuests] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  useEffect(() => {
+    (async () => {
+      const [resSubEvents, restasks, resGuests] = await Promise.all([
+        getOverviewSubEvents(eventId),
+        getOverviewTasks(eventId),
+        getOverviewGuests(eventId),
+      ]);
+      setSubEvents(resSubEvents);
+      setGuests(resGuests);
+      setTasks(restasks);
+    })();
+  }, []);
+  return (
+    <div className="eventmainsubSection">
+      <div className="eventmainoverview">
+        <div className="eventoverviewcard">
+          <div className="eventoverviewname">
+            <p className="overcardEventName">{eventName}</p>
+            <p className="overcardEventType">{eventType}</p>
+          </div>
+          <div className="overviewmain">
+            <div className="overviewmainsub">
+              <p className="overviewmainsubText"> Location</p>
+              <p className="overviewmainText">{eventLocation}</p>
+            </div>
+            <div className="overviewmainsub">
+              <p className="overviewmainsubText">Start Date</p>
+              <p className="overviewmainText">
+                {formatDateWithSuffix(eventStart)}
+              </p>
+            </div>
+            <div className="overviewmainsub">
+              <p className="overviewmainsubText">End Date</p>
+              <p className="overviewmainText">
+                {formatDateWithSuffix(eventEnd)}
+              </p>
+            </div>
+          </div>
         </div>
-        <div className="overviewmain">
-          <div className="overviewmainsub">
-            <p className="overviewmainsubText"> Location</p>
-            <p className="overviewmainText">Kolkata</p>
-          </div>
-          <div className="overviewmainsub">
-            <p className="overviewmainsubText">Start Date</p>
-            <p className="overviewmainText">Jan 20,2026</p>
-          </div>
-          <div className="overviewmainsub">
-            <p className="overviewmainsubText">End Date</p>
-            <p className="overviewmainText">Jan 20,2026</p>
-          </div>
-        </div>
-      </div>
-      <div className="overviewfull">
-        <div className="overviewmainsubpart">
-          <div className="subpartHeader">
-            <p>Sub Events</p>
-          </div>
-          <div className="subpartmain">
-            {overviewSubevents &&
-              overviewSubevents.map((sub, key) => (
-                <div className="subpartUnit">
-                  <div className="subpartunittext">
-                    <p>{sub.name}</p>
+        <div className="overviewfull">
+          <div className="overviewmainsubpart">
+            <div className="subpartHeader">
+              <p>Sub Events</p>
+            </div>
+            <div className="subpartmain">
+              {subEvents &&
+                subEvents.map((sub, key) => (
+                  <div className="subpartUnit">
+                    <div className="subpartunittext">
+                      <p>{sub.subEventName}</p>
+                    </div>
+                    <div className="subpartunittag">
+                      <span className={`statusTag ${"Pending".toLowerCase()}`}>
+                        {"Pending"}
+                      </span>
+                    </div>
                   </div>
-                  <div className="subpartunittag">
-                    <span className={`statusTag ${sub.status.toLowerCase()}`}>
-                      {sub.status}
-                    </span>
-                  </div>
-                </div>
-              ))}
+                ))}
+            </div>
+            <div className="subpartmain">
+              <button onClick={() => setActiveTab("Sub Events")}>
+                See More
+              </button>
+            </div>
           </div>
-          <div className="subpartmain">
-            <button>See More</button>
-          </div>
-        </div>
 
-        <div className="overviewmainsubpart">
-          <div className="subpartHeader">
-            <p>Tasks</p>
-          </div>
-          <div className="subpartmain">
-            {overviewTasks &&
-              overviewTasks.map((sub, key) => (
-                <div className="subpartUnit">
-                  <div className="subpartunittext">
-                    <p>{sub.name}</p>
+          <div className="overviewmainsubpart">
+            <div className="subpartHeader">
+              <p>Tasks</p>
+            </div>
+            <div className="subpartmain">
+              {tasks &&
+                tasks.map((sub, key) => (
+                  <div className="subpartUnit">
+                    <div className="subpartunittext">
+                      <p>{sub.taskName}</p>
+                    </div>
+                    <div className="subpartunittag">
+                      <span
+                        className={`statusTag ${sub.taskStatus.toLowerCase()}`}
+                      >
+                        {sub.taskStatus}
+                      </span>
+                    </div>
                   </div>
-                  <div className="subpartunittag">
-                    <span className={`statusTag ${sub.status.toLowerCase()}`}>
-                      {sub.status}
-                    </span>
+                ))}
+            </div>
+            <div className="subpartmain">
+              <button onClick={() => setActiveTab("Tasks")}>See More</button>
+            </div>
+          </div>
+          <div className="overviewmainsubpart">
+            <div className="subpartHeader">
+              <p>Guests</p>
+            </div>
+            <div className="subpartmain">
+              {guests &&
+                guests.map((sub, key) => (
+                  <div className="subpartUnit">
+                    <div className="subpartunittext">
+                      <p>{sub.guestName}</p>
+                    </div>
+                    <div className="subpartunittag">
+                      <span
+                        className={`statusTag ${"Attending".toLowerCase()}`}
+                      >
+                        {"Attending"}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              ))}
-          </div>
-          <div className="subpartmain">
-            <button>See More</button>
-          </div>
-        </div>
-        <div className="overviewmainsubpart">
-          <div className="subpartHeader">
-            <p>Vendors</p>
-          </div>
-          <div className="subpartmain">
-            {overviewSubevents &&
-              overviewSubevents.map((sub, key) => (
-                <div className="subpartUnit">
-                  <div className="subpartunittext">
-                    <p>{sub.name}</p>
-                  </div>
-                  <div className="subpartunittag">
-                    <span className={`statusTag ${sub.status.toLowerCase()}`}>
-                      {sub.status}
-                    </span>
-                  </div>
-                </div>
-              ))}
-          </div>
-          <div className="subpartmain">
-            <button>See More</button>
+                ))}
+            </div>
+            <div className="subpartmain">
+              <button onClick={() => setActiveTab("Guests")}>See More</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const SubEvents = ({ setSubEventModel }) => {
   const { eventId } = useSelector((state) => state.singleEvent);
@@ -242,7 +312,7 @@ const SubEvents = ({ setSubEventModel }) => {
           {subEvents.map((se, i) => (
             <tr key={i}>
               <td>{se.subEventName}</td>
-              <td>{se.subEventStartDate}</td>
+              <td>{formatDateWithSuffix(se.subEventStartDate)}</td>
               <td>{se.subEventLocation}</td>
               <td>
                 <span className={`statusTag ${"Pending".toLowerCase()}`}>
@@ -259,30 +329,18 @@ const SubEvents = ({ setSubEventModel }) => {
 };
 
 const Tasks = ({ setTaskModal }) => {
-  const tasks = [
-    {
-      task: "Book Venue",
-      subEvent: "Opening Ceremony",
-      assignedTo: "John Doe",
-      due: "2025-11-25",
-      status: "Completed",
-    },
-    {
-      task: "Send Invitations",
-      subEvent: "Workshop: AI in 2025",
-      assignedTo: "Sarah Lee",
-      due: "2025-11-28",
-      status: "Progress",
-    },
-    {
-      task: "Arrange Catering",
-      subEvent: "Closing Gala",
-      assignedTo: "Michael Chen",
-      due: "2025-12-01",
-      status: "Pending",
-    },
-  ];
+  const { orgId, eventId } = useSelector((state) => state.singleEvent);
+  const [tasks, setTasks] = useState([]);
+  const [fetch, setFetch] = useState(true);
 
+  useState(() => {
+    (async () => {
+      if (!fetch) return;
+      let data = await getAllTasksByEvent({ orgId, eventId });
+      setTasks(data);
+      setFetch(false);
+    })();
+  }, []);
   return (
     <div className="eventmainsubSection">
       <div className="subeventHeader">
@@ -303,6 +361,7 @@ const Tasks = ({ setTaskModal }) => {
             <th>Task</th>
             <th>Sub Event</th>
             <th>Assigned To</th>
+            <th>Vendor</th>
             <th>Due</th>
             <th>Status</th>
           </tr>
@@ -310,14 +369,16 @@ const Tasks = ({ setTaskModal }) => {
         <tbody>
           {tasks.map((task, i) => (
             <tr key={i}>
-              <td>{task.task}</td>
-              <td>{task.subEvent}</td>
-              <td>{task.assignedTo}</td>
-              <td>{task.due}</td>
+              <td>{task.taskName}</td>
+              <td>{task.tasksubEvent}</td>
+              <td>{task.taskMember}</td>
+              <td>{task.taskVendor}</td>
+              <td>{formatISODateWithSuffix(task.taskDue)}</td>
               <td>
-                <span className={`statusTag ${task.status.toLowerCase()}`}>
+                {/* <span className={`statusTag ${task.status.toLowerCase()}`}>
                   {task.status}
-                </span>
+                </span> */}
+                {task.taskStatus}
               </td>
             </tr>
           ))}
@@ -328,32 +389,19 @@ const Tasks = ({ setTaskModal }) => {
 };
 
 const Vendors = () => {
-  const vendors = [
-    {
-      vendor: "Decor Co.",
-      subEvent: "Opening Ceremony",
-      due: "2025-11-20",
-      status: "Completed",
-    },
-    {
-      vendor: "Food & Drinks Inc.",
-      subEvent: "Closing Gala",
-      due: "2025-11-28",
-      status: "Pending",
-    },
-    {
-      vendor: "Tech AV Solutions",
-      subEvent: "Workshop: AI in 2025",
-      due: "2025-11-25",
-      status: "In Progress",
-    },
-  ];
-
+  const { orgId, eventId } = useSelector((state) => state.singleEvent);
+  const [vendors, setVendors] = useState([]);
+  useEffect(() => {
+    (async () => {
+      let data = await getAllVendorsEvent(eventId);
+      setVendors(data);
+    })();
+  }, []);
   return (
     <div className="eventmainsubSection">
       <div className="subeventHeader">
         <h2>Vendors</h2>
-        <button className="addSubEventBtn">+ Add Vendor</button>
+        {/* <button className="addSubEventBtn">+ Add Vendor</button> */}
       </div>
 
       <table className="subeventTable">
@@ -361,26 +409,30 @@ const Vendors = () => {
           <tr>
             <th>Vendor</th>
             <th>Sub Event</th>
-            <th>Due</th>8<th>Status</th>
+            <th>Task</th>
+            <th>Due</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
-          {vendors.map((v, i) => (
-            <tr key={i}>
-              <td>{v.vendor}</td>
-              <td>{v.subEvent}</td>
-              <td>{v.due}</td>
-              <td>
-                <span
-                  className={`statusTag ${v.status
-                    .toLowerCase()
-                    .replace(" ", "")}`}
-                >
-                  {v.status}
-                </span>
-              </td>
-            </tr>
-          ))}
+          {vendors &&
+            vendors.map((v, i) => (
+              <tr key={i}>
+                <td>{v.vendorName}</td>
+                <td>{v.subEvent}</td>
+                <td>{v.task}</td>
+                <td>{formatISODateWithSuffix(v.dueDate)}</td>
+                <td>
+                  <span
+                    className={`statusTag ${v.status
+                      .toLowerCase()
+                      .replace(" ", "")}`}
+                  >
+                    {v.status}
+                  </span>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>
@@ -430,7 +482,7 @@ const Guests = ({ setGuestModal }) => {
   useEffect(() => {
     (async () => {
       if (!fetchData) return;
-      let data = await getAllGuests();
+      let data = await getGuestsByEventId(eventId);
       setGuestsList(data);
       setFetchData(false);
     })();
@@ -445,7 +497,7 @@ const Guests = ({ setGuestModal }) => {
         </button>
       </div>
 
-      {guestsList.length === 0 ? (
+      {guestsList && guestsList.length === 0 ? (
         <div className="noGuestsContainer">
           <p className="noGuestsText">No Guests Added</p>
 
@@ -484,6 +536,54 @@ const Guests = ({ setGuestModal }) => {
           </tbody>
         </table>
       )}
+    </div>
+  );
+};
+
+const Messages = ({ setMessageModal }) => {
+  const { orgId, eventId } = useSelector((state) => state.singleEvent);
+  const [messages, setMessages] = useState([]);
+  const [fetch, setFetch] = useState(true);
+  useEffect(() => {
+    (async () => {
+      if (!fetch) return;
+      let data = await fetchMessages({ orgId, eventId });
+      setMessages(data);
+      setFetch(false);
+    })();
+  }, [fetch]);
+  return (
+    <div className="eventmainsubSection">
+      <div className="subeventHeader">
+        <h2>Messages</h2>
+        <button
+          className="addSubEventBtn"
+          onClick={() => setMessageModal(true)}
+        >
+          + Add Message
+        </button>
+      </div>
+
+      <table className="subeventTable">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Message</th>
+            <th>Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {messages.map((v, i) => (
+            <tr key={i}>
+              <td>{v.messageTitle}</td>
+              <td>{v.messageDescription}</td>
+              <td>{v.createdAt}</td>
+              <td>{v.msgStatus}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
@@ -623,7 +723,7 @@ const GuestModal = ({ setGuestModal }) => {
     });
   };
   const handleSubEventRegister = async () => {
-    //await subEventRegister(subEventData);
+    await addSingleGuest(guestData);
     setGuestModal(false);
   };
   return (
@@ -688,6 +788,7 @@ const TaskModal = ({ setTaskModal }) => {
   const [taskData, setTaskData] = useState({
     orgId: orgId,
     eventId: eventId,
+    subEventId: "",
     taskName: "",
     taskDescription: "",
     taskDue: "",
@@ -698,6 +799,8 @@ const TaskModal = ({ setTaskModal }) => {
     taskStatus: "Created",
   });
   const [vendorData, setVendorData] = useState([]);
+  const [memberData, setMemberData] = useState([]);
+  const [subevent, setSubEvent] = useState([]);
 
   const handleChange = (e) => {
     setTaskData({
@@ -710,13 +813,20 @@ const TaskModal = ({ setTaskModal }) => {
   //   setSubEventModel(false);
   // };
 
-  const handleTaskCreate = () => {
+  const handleTaskCreate = async () => {
     console.log(taskData);
+    await taskRegister(taskData);
+    setTaskModal(false);
   };
+
   useEffect(() => {
     (async () => {
-      let venData = await getVendorsDrop();
+      let venData = await getVendorsDrop(orgId);
+      let memberData = await getMembersDrop(orgId);
+      let subeventData = await getSubEventDrop(eventId);
       setVendorData(venData);
+      setMemberData(memberData);
+      setSubEvent(subeventData);
     })();
   }, []);
   return (
@@ -750,6 +860,15 @@ const TaskModal = ({ setTaskModal }) => {
           </div>
         </div>
         <div className="modalUnit">
+          <FloatingSelectInput
+            label="Select Sub Event"
+            name="subEventId"
+            value={taskData.subEventId}
+            onChange={handleChange}
+            options={subevent}
+          />
+        </div>
+        <div className="modalUnit">
           <div className="modalUnitHalf">
             <FloatingMultiSelectDropdown
               label="Task Vendors"
@@ -775,7 +894,7 @@ const TaskModal = ({ setTaskModal }) => {
               name="taskMembers"
               value={taskData.taskMembers}
               onChange={handleChange}
-              options={vendorData}
+              options={memberData}
             />
           </div>
           <div className="modalUnitHalf">
@@ -798,6 +917,123 @@ const TaskModal = ({ setTaskModal }) => {
         <div className="modalButtonSection">
           <button>Cancel</button>
           <button onClick={handleTaskCreate}>Create</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const MessageModal = ({ setMessageModal }) => {
+  const { orgId, eventId } = useSelector((state) => state.singleEvent);
+  const [vendorData, setVendorData] = useState([]);
+  const [msgData, setMsgData] = useState({
+    orgId: orgId,
+    eventId: eventId,
+    messageTitle: "",
+    messageDescription: "",
+    messageGuests: [],
+    messageEmail: false,
+    messageWhatsapp: false,
+    messageSms: false,
+  });
+  const handleChange = (e) => {
+    setMsgData({
+      ...msgData,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target;
+    setMsgData({
+      ...msgData,
+      [name]: checked,
+    });
+  };
+  const createMessage = async () => {
+    console.log(msgData);
+    await messageRegister(msgData);
+  };
+  useEffect(() => {
+    (async () => {
+      let venData = await getGuestsDropdown(eventId);
+      setVendorData(venData);
+    })();
+  }, []);
+  return (
+    <div className="pageModal">
+      <div className="modal">
+        <img
+          src="assets/common/close.png"
+          className="modalClose"
+          onClick={() => setMessageModal(false)}
+          alt=""
+        />
+        <div className="modalHeader">
+          <p>Create Messsage</p>
+        </div>
+        <div className="modalUnit">
+          <FloatingLabelInput
+            label="Message Title"
+            name="messageTitle"
+            value={msgData.messageTitle}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="modalUnit">
+          <FloatingLabelTextarea
+            label="Message"
+            name="messageDescription"
+            value={msgData.messageDescription}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="modalUnit">
+          <FloatingMultiSelectDropdown
+            label="Add Guests"
+            name="messageGuests"
+            value={msgData.messageGuests}
+            onChange={handleChange}
+            options={vendorData}
+          />
+        </div>
+        <div className="modalUnit" style={{ marginTop: "30px" }}>
+          <p className="modalSubHeader">Message Option</p>
+
+          <div className="checkboxGroup">
+            <label className="checkboxItem">
+              <input
+                type="checkbox"
+                name="messageEmail"
+                checked={msgData.messageEmail}
+                onChange={handleCheckboxChange}
+              />
+              Email
+            </label>
+
+            <label className="checkboxItem">
+              <input
+                type="checkbox"
+                name="messageWhatsapp"
+                checked={msgData.messageWhatsapp}
+                onChange={handleCheckboxChange}
+              />
+              WhatsApp
+            </label>
+
+            <label className="checkboxItem">
+              <input
+                type="checkbox"
+                name="messageSms"
+                checked={msgData.messageSms}
+                onChange={handleCheckboxChange}
+              />
+              SMS
+            </label>
+          </div>
+        </div>
+        <div className="modalButtonSection">
+          <button>Cancel</button>
+          <button onClick={createMessage}> Create</button>
         </div>
       </div>
     </div>

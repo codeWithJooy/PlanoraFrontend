@@ -79,3 +79,51 @@ export const getSingleEvent = async (eventId) => {
     return null;
   }
 };
+
+export const getOverviewSubEvents = async (eventId) => {
+  try {
+    const headers = getHeaders();
+    const response = await eventApi.get(
+      `/overview/subevents/${eventId}`,
+      headers
+    );
+    if (response.data.code === 200) {
+      return response.data.data;
+    } else return [];
+  } catch (error) {
+    console.log(error.message);
+    return null;
+  }
+};
+
+export const getOverviewTasks = async (eventId) => {
+  try {
+    const headers = getHeaders();
+    const response = await eventApi.get(
+      `/overview/tasks/${eventId}`,
+      headers
+    );
+    if (response.data.code === 200) {
+      return response.data.data;
+    } else return [];
+  } catch (error) {
+    console.log(error.message);
+    return null;
+  }
+};
+
+export const getOverviewGuests = async (eventId) => {
+  try {
+    const headers = getHeaders();
+    const response = await eventApi.get(
+      `/overview/guests/${eventId}`,
+      headers
+    );
+    if (response.data.code === 200) {
+      return response.data.data;
+    } else return [];
+  } catch (error) {
+    console.log(error.message);
+    return null;
+  }
+};

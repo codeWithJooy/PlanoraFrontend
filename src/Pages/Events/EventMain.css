@@ -367,3 +367,20 @@
   }
   
   /*==================================================*/
+
+  .modalSubHeader {
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  
+  .checkboxGroup {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .checkboxItem {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  

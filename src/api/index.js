@@ -12,6 +12,9 @@ const devApis = {
   SUBEVENT: "http://localhost:5000/api/subevents",
   GUEST: "http://localhost:5000/api/guests",
   DROP: "http://localhost:5000/api/dropdown",
+  TASK: "http://localhost:5000/api/tasks",
+  MESSAGE: "http://localhost:5000/api/messages",
+  DASHBOARD: "http://localhost:5000/api/dashboard",
 };
 
 const prodApis = {
@@ -21,6 +24,9 @@ const prodApis = {
   EVENT: `${LIVE_URL}/api/events`,
   SUBEVENT: `${LIVE_URL}/api/subevents`,
   GUEST: `${LIVE_URL}/api/guests`,
+  TASK: `${LIVE_URL}/api/tasks`,
+  MESSAGE: `${LIVE_URL}/api/messages`,
+  DASHBOARD: `${LIVE_URL}/api/dashboard`,
 };
 
 const getApiUrls = () => {
@@ -38,7 +44,9 @@ export const eventApi = axios.create({ baseURL: APIS.EVENT });
 export const subeventApi = axios.create({ baseURL: APIS.SUBEVENT });
 export const guestApi = axios.create({ baseURL: APIS.GUEST });
 export const dropApi = axios.create({ baseURL: APIS.DROP });
-
+export const taskApi = axios.create({ baseURL: APIS.TASK });
+export const messageApi = axios.create({ baseURL: APIS.MESSAGE });
+export const dashApi = axios.create({ baseURL: APIS.DASHBOARD });
 /**
  * Attach Interceptors
  */

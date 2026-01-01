@@ -25,16 +25,24 @@ export const vendorRegister = async (data) => {
 
 export const getAllVendors = async (orgId) => {
   try {
-    const headers=getHeaders();
-    const response=await vendorApi.get(`/${orgId}`,headers)
-    if(response.data.code===200){
-        dispatchAction(
-            VENDORS_FETCHED,
-            response.data.vendors
-        )
-        return response.data.vendors
-    }
-    else return []
+    const headers = getHeaders();
+    const response = await vendorApi.get(`/${orgId}`, headers);
+    if (response.data.code === 200) {
+      dispatchAction(VENDORS_FETCHED, response.data.vendors);
+      return response.data.vendors;
+    } else return [];
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const getAllVendorsEvent = async (eventId) => {
+  try {
+    const headers = getHeaders();
+    const response = await vendorApi.get(`/tasks/event/${eventId}`, headers);
+    if (response.data.code === 200) {
+      return response.data.data;
+    } else return [];
   } catch (error) {
     console.log(error.message);
   }
