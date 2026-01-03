@@ -15,6 +15,7 @@ const devApis = {
   TASK: "http://localhost:5000/api/tasks",
   MESSAGE: "http://localhost:5000/api/messages",
   DASHBOARD: "http://localhost:5000/api/dashboard",
+  DASHBOARDNew: "http://localhost:5000/api/dashboard",
 };
 
 const prodApis = {
